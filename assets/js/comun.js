@@ -219,7 +219,7 @@ $$("nav .links a").forEach(a => a.addEventListener("click", () => document.body.
 ScrollTrigger.create({ start: 0, end: "max", onUpdate: s => {
   gsap.set("#progreso", { scaleX: s.progress });
   $("#barra").classList.toggle("solida", s.scroll() > 40);
-  document.body.classList.toggle("ya-bajo", s.scroll() > 320);
+  window.__aviBoton ? window.__aviBoton(s.scroll() > 320) : document.body.classList.toggle("ya-bajo", s.scroll() > 320);
   window.__scroll.v = s.getVelocity();
 }});
 
@@ -245,13 +245,14 @@ const vol = $("#voladora");
 if (vol && !REDUCIR) {
   const vuelo = () => {
     const W = innerWidth, H = innerWidth < 760 ? innerHeight * .45 : innerHeight;
-    gsap.timeline({ onComplete: vuelo })
+    window.__vueloTl = gsap.timeline({ onComplete: vuelo })
       .set(vol, { x: -80, y: H * .3, rotation: 15 })
       .to(vol, { duration: 7, ease: "none", keyframes: [
         { x: W * .18, y: H * .18, rotation: 10 }, { x: W * .38, y: H * .32, rotation: -8 }, { x: W * .55, y: H * .14, rotation: 12 },
         { x: W * .74, y: H * .26, rotation: -10 }, { x: W + 80, y: H * .12, rotation: 8 }] })
       .to({}, { duration: 2.5 });
   };
+  window.__vuelo = vuelo;
   vuelo();
 }
 
@@ -610,6 +611,41 @@ if (!REDUCIR) {
       }
     });
   }
+}
+
+
+// ---------- la avispita del inicio vuela a la esquina y se convierte en el botón de Vera ----------
+{
+  const volando = $("#voladora"), botonVera = $("#aviAyuda");
+  let abajo = false, viajera = null, vueloAlBoton = null;
+  const limpiar = () => { if (vueloAlBoton) vueloAlBoton.kill(); vueloAlBoton = null; if (viajera) viajera.remove(); viajera = null; };
+  window.__aviBoton = baja => {
+    if (baja === abajo) return;
+    abajo = baja;
+    limpiar();
+    if (!botonVera || !volando || REDUCIR || document.body.classList.contains("con-aviso")) { document.body.classList.toggle("ya-bajo", baja); return; }
+    if (!baja) {
+      document.body.classList.remove("ya-bajo");
+      volando.style.visibility = "";
+      if (window.__vuelo) { window.__vueloTl && window.__vueloTl.kill(); window.__vuelo(); }
+      return;
+    }
+    if (window.__vueloTl) window.__vueloTl.kill();
+    const r = volando.getBoundingClientRect(), giro = gsap.getProperty(volando, "rotation") || 0;
+    volando.style.visibility = "hidden";
+    viajera = document.createElement("div");
+    viajera.className = "avi-viajera"; viajera.setAttribute("aria-hidden", "true"); viajera.innerHTML = avispaHTML;
+    document.body.appendChild(viajera);
+    const base = $(".avi-base", botonVera).getBoundingClientRect();
+    const destinoX = base.left + base.width / 2 - 27, destinoY = base.top + base.height / 2 - 36 - (document.body.classList.contains("ya-bajo") ? 0 : 14);
+    gsap.set(viajera, { x: Math.max(-60, Math.min(innerWidth, r.left)), y: Math.max(40, Math.min(innerHeight - 90, r.top)), rotation: giro });
+    vueloAlBoton = gsap.timeline({ onComplete: limpiar })
+      .to(viajera, { x: destinoX, duration: .95, ease: "power1.inOut" }, 0)
+      .to(viajera, { y: destinoY, duration: .95, ease: "power3.in" }, 0)
+      .to(viajera, { scale: .6, rotation: 360, duration: .95, ease: "power2.inOut" }, 0)
+      .call(() => document.body.classList.add("ya-bajo"), null, .68)
+      .fromTo($(".avi-base", botonVera), { scale: .5 }, { scale: 1, duration: .32, ease: "back.out(2.4)", clearProps: "scale" }, .68);
+  };
 }
 
 // ---------- Vera: chat guiado con botones (no usa IA ni guarda datos) ----------
