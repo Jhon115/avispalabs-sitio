@@ -519,3 +519,17 @@ nav.solida { background: rgba(10,8,5,.93); }
 .beneficios.dos .beneficio p { font-size: clamp(17px, 1.6vw, 21px); line-height: 1.5; color: var(--crema); }
 .beneficios.dos .beneficio h4 { font-size: 28px; color: var(--oro); }
 @media (max-width: 900px) { .beneficios.dos { grid-template-columns: 1fr; } }
+
+/* ---------- idioma y clic derecho ---------- */
+#panal3d { pointer-events: none; } /* así el clic derecho muestra el menú normal, con la opción de traducir */
+.idiomas { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 13px; color: var(--gris); }
+.idiomas a { padding: 4px 2px; }
+.idiomas a::after { display: none; }
+.idiomas a.actual { color: var(--oro); }
+.idiomas span { opacity: .4; }
+@media (max-width: 900px) {
+  nav .links .idiomas { padding: 16px 0 6px; font-size: 18px; gap: 12px; }
+  nav .links .idiomas a { padding: 0; border: 0; }
+}
+
+@media (max-width: 360px) { nav .btn { padding: 8px 10px; font-size: 12px; } .logo { font-size: 16px; } }

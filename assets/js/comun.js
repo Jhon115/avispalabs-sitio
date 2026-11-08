@@ -5,6 +5,8 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const REDUCIR = matchMedia("(prefers-reduced-motion: reduce)").matches;
 window.__scroll = { p: 0, v: 0 };
+const EN = document.documentElement.lang === "en";
+const L = (es, en) => EN ? en : es;
 
 // ---------- datos ----------
 $$(".anio").forEach(e => e.textContent = new Date().getFullYear());
@@ -22,11 +24,11 @@ const llenar = (el, arr, hueco) => {
   const uno = arr.map((t, i) => `<span class="${(i % 2) === hueco ? "hueco" : ""}">${t}<i></i></span>`).join("");
   el.innerHTML = uno + uno + uno;
 };
-llenar($("#fila1"), ["Bots de WhatsApp", "Edición de video", "Automatización", "Motion graphics"], 1);
-llenar($("#fila2"), ["Inteligencia artificial", "Reels que venden", "Paneles de control", "¡Avíspese, ome!"], 0);
+llenar($("#fila1"), L(["Bots de WhatsApp", "Edición de video", "Automatización", "Motion graphics"], ["WhatsApp bots", "Video editing", "Automation", "Motion graphics"]), 1);
+llenar($("#fila2"), L(["Inteligencia artificial", "Reels que venden", "Paneles de control", "¡Avíspese, ome!"], ["Artificial intelligence", "Reels that sell", "Dashboards", "Work like a swarm"]), 0);
 
 // pasos de las avispitas
-const PASOS = [
+const PASOS_ES = [
   ["💬", "Recibe", "Contesta cada mensaje de WhatsApp al instante, de día o de noche."],
   ["📦", "Busca", "Consulta precios e inventario real de cada sede."],
   ["🎤", "Escucha", "Entiende notas de voz como si fuera una persona."],
@@ -36,6 +38,16 @@ const PASOS = [
   ["🙋", "Avisa", "Le pasa el chat a un asesor humano cuando hace falta."],
   ["📊", "Reporta", "Pagos, casos e inventario quedan en tu panel."]
 ];
+const PASOS = EN ? [
+  ["💬", "Receives", "Answers every WhatsApp message instantly, day or night."],
+  ["📦", "Searches", "Checks real prices and inventory at each location."],
+  ["🎤", "Listens", "Understands voice notes as if it were a person."],
+  ["🧾", "Verifies", "Reads payment receipts and leaves them ready to approve."],
+  ["📸", "Recognizes", "Identifies products from a single photo."],
+  ["🛡️", "Filters", "Blocks spam and scam attempts."],
+  ["🙋", "Alerts", "Hands the chat to a human agent when needed."],
+  ["📊", "Reports", "Payments, cases and inventory all land in your dashboard."]
+] : PASOS_ES;
 const avispaHTML = `<div class="avispa"><div class="ala i"></div><div class="ala d"></div><div class="cuerpo"></div><div class="ojo i"></div><div class="ojo d"></div></div>`;
 if ($("#carril")) $("#carril").innerHTML = PASOS.map(([ico, t, d], i) =>
   `<div class="paso"><div class="num">${String(i + 1).padStart(2, "0")}</div><div class="avi-cont">${avispaHTML}<div class="herr">${ico}</div></div><h4>${t}</h4><p>${d}</p></div>`).join("");
@@ -121,10 +133,14 @@ const iraA = url => {
   prepararT();
   capa.classList.add("activa");
   window.__panalPausa = true; // el panal 3D descansa mientras corre la transición
-  animarT(400, false, p => { if (p > .6) capa.classList.add("logo"); }, () => {
+  let fue = false;
+  const ir = () => {
+    if (fue) return; fue = true;
     try { sessionStorage.setItem("avispa-trans", "1"); } catch (e) {}
     location.href = url;
-  });
+  };
+  animarT(400, false, p => { if (p > .6) capa.classList.add("logo"); }, ir);
+  setTimeout(ir, 900); // respaldo si el navegador pausa las animaciones (pestaña en segundo plano)
 };
 const destapar = () => {
   prepararT();
@@ -164,6 +180,19 @@ const adelantar = () => {
   });
 };
 "requestIdleCallback" in window ? requestIdleCallback(adelantar, { timeout: 3000 }) : setTimeout(adelantar, 2500);
+
+// ---------- botón ES | EN ----------
+$$(".idiomas a").forEach(a => {
+  const destino = a.dataset.lang;
+  const ruta = location.pathname.replace(/^\/en(\/|$)/, "/");
+  a.href = (destino === "en" ? "/en" + ruta : ruta) + location.search;
+  a.classList.toggle("actual", destino === (EN ? "en" : "es"));
+  a.addEventListener("click", e => {
+    e.preventDefault();
+    try { localStorage.setItem("avispalabs-idioma", destino); } catch (err) {}
+    if (destino !== (EN ? "en" : "es")) iraA(a.getAttribute("href"));
+  });
+});
 
 // ---------- movimiento ----------
 gsap.registerPlugin(ScrollTrigger);
@@ -270,7 +299,7 @@ if ($("#telObrera")) {
     onToggle: s => s.isActive ? vid.play().catch(() => {}) : vid.pause() });
   $("#btnSonido").addEventListener("click", e => {
     vid.muted = !vid.muted; if (!vid.muted) { vid.currentTime = 0; vid.play(); }
-    e.currentTarget.textContent = vid.muted ? "🔊 Activar sonido" : "🔇 Silenciar";
+    e.currentTarget.textContent = vid.muted ? L("🔊 Activar sonido", "🔊 Turn on sound") : L("🔇 Silenciar", "🔇 Mute");
   });
 }
 // contadores
@@ -357,7 +386,8 @@ addEventListener("load", () => ScrollTrigger.refresh());
 // ---------- formulario de contacto: arma el mensaje y lo manda por WhatsApp o correo ----------
 const form = $("#formContacto");
 if (form) {
-  const NOMBRES = { flow: "Automatizar mi negocio (Avispa Flow)", studio: "Editar mis videos (Avispa Studio)", ambos: "Automatizar mi negocio y editar mis videos", otro: "Otra cosa" };
+  const NOMBRES = EN ? { flow: "Automate my business (Avispa Flow)", studio: "Edit my videos (Avispa Studio)", ambos: "Automate my business and edit my videos", otro: "Something else" }
+    : { flow: "Automatizar mi negocio (Avispa Flow)", studio: "Editar mis videos (Avispa Studio)", ambos: "Automatizar mi negocio y editar mis videos", otro: "Otra cosa" };
   const dFlow = $("#detalleFlow"), dStudio = $("#detalleStudio"), numDatos = $("#numDatos");
   const wa = $("#cWa"), correo = $("#cCorreo"), resumen = $("#cResumen"), aviso = $("#cAviso");
   const marcados = g => $$(`input[name="${g}"]:checked`, form).map(i => i.value);
@@ -368,23 +398,24 @@ if (form) {
     dStudio.querySelector(".pf-num").textContent = s === "ambos" ? "3" : "2";
     numDatos.textContent = s === "ambos" ? "4" : (s === "flow" || s === "studio") ? "3" : "2";
     const nombre = $("#cNombre").value.trim(), negocio = $("#cNegocio").value.trim(), extra = $("#cMensaje").value.trim();
-    if (!s) { resumen.textContent = "Escoge qué necesitas para armar tu mensaje 🐝"; wa.classList.add("apagado"); correo.classList.add("apagado"); return null; }
-    let t = `Hola AvispaLabs 🐝${nombre ? `, soy ${nombre}` : ""}${negocio ? ` de ${negocio}` : ""}.\nQuiero: ${NOMBRES[s]}.`;
+    if (!s) { resumen.textContent = L("Escoge qué necesitas para armar tu mensaje 🐝", "Choose what you need to build your message 🐝"); wa.classList.add("apagado"); correo.classList.add("apagado"); return null; }
+    let t = EN ? `Hi AvispaLabs 🐝${nombre ? `, I'm ${nombre}` : ""}${negocio ? ` from ${negocio}` : ""}.\nI want: ${NOMBRES[s]}.`
+      : `Hola AvispaLabs 🐝${nombre ? `, soy ${nombre}` : ""}${negocio ? ` de ${negocio}` : ""}.\nQuiero: ${NOMBRES[s]}.`;
     const f = dFlow.hidden ? [] : marcados("flow"), st = dStudio.hidden ? [] : marcados("studio");
-    if (f.length) t += `\nAutomatizar: ${f.join(", ")}.`;
+    if (f.length) t += `\n${L("Automatizar", "Automate")}: ${f.join(", ")}.`;
     if (st.length) t += `\nVideo: ${st.join(", ")}.`;
     if (extra) t += `\n${extra}`;
     resumen.textContent = t;
     wa.classList.remove("apagado"); correo.classList.remove("apagado");
     wa.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t)}`;
-    correo.href = `mailto:jhon@avispalabs.com?subject=${encodeURIComponent("Contacto desde la web · " + NOMBRES[s])}&body=${encodeURIComponent(t)}`;
+    correo.href = `mailto:jhon@avispalabs.com?subject=${encodeURIComponent(L("Contacto desde la web · ", "Website contact · ") + NOMBRES[s])}&body=${encodeURIComponent(t)}`;
     return t;
   };
   form.addEventListener("input", armar);
   form.addEventListener("change", () => { armar(); setTimeout(() => ScrollTrigger.refresh(), 50); });
   [wa, correo].forEach(b => b.addEventListener("click", e => {
-    if (!armar()) { e.preventDefault(); aviso.textContent = "Primero escoge qué necesitas (paso 1) 👆"; return; }
-    if (!$("#cAcepto").checked) { e.preventDefault(); aviso.textContent = "Para enviar, marca la casilla de la Política de tratamiento de datos 👆"; return; }
+    if (!armar()) { e.preventDefault(); aviso.textContent = L("Primero escoge qué necesitas (paso 1) 👆", "First choose what you need (step 1) 👆"); return; }
+    if (!$("#cAcepto").checked) { e.preventDefault(); aviso.textContent = L("Para enviar, marca la casilla de la Política de tratamiento de datos 👆", "To send, check the Personal Data Policy box 👆"); return; }
     aviso.textContent = "";
   }));
   // si viene desde Avispa Flow o Avispa Studio, dejar marcada esa opción
@@ -408,14 +439,14 @@ if ($("#calcPaquete")) {
   };
   const MONEDA_POR_PAIS = { CO: "COP", MX: "MXN", PE: "PEN", CL: "CLP", AR: "ARS", ES: "EUR", US: "USD" };
   const calcMoneda = $("#calcMoneda");
-  calcMoneda.value = MONEDA_POR_PAIS[(navigator.language.split("-")[1] || "").toUpperCase()] || "COP";
+  calcMoneda.value = MONEDA_POR_PAIS[(navigator.language.split("-")[1] || "").toUpperCase()] || (EN ? "USD" : "COP");
   let tasas = null;
   const enMoneda = (v, m) => {
     let valor = v * tasas[m];
     if (tasas[m] > 100) valor = Math.round(valor / 100) * 100;
-    return new Intl.NumberFormat("es-CO", { style: "currency", currency: m, currencyDisplay: "code", maximumFractionDigits: m === "EUR" ? 2 : 0 }).format(valor);
+    return new Intl.NumberFormat(L("es-CO", "en-US"), { style: "currency", currency: m, currencyDisplay: "code", maximumFractionDigits: m === "EUR" ? 2 : 0 }).format(valor);
   };
-  const usd = n => "$" + (Number.isInteger(n) ? n : n.toFixed(2).replace(".", ","));
+  const usd = n => "$" + (Number.isInteger(n) ? n : EN ? n.toFixed(2) : n.toFixed(2).replace(".", ","));
   const precioSuelto = (tipo, c) => PRECIOS[tipo].suelto.filter(([desde]) => c >= desde).pop()[1];
 
   let cantMensual = 12;
@@ -429,7 +460,9 @@ if ($("#calcPaquete")) {
     const tip = $("#calcTip"), p = PRECIOS[tipo];
     const plan = [30, 24, 18, 12, 6].find(c => cantidad >= c);
     tip.hidden = false;
-    tip.textContent = plan
+    tip.textContent = EN
+      ? (plan ? `${usd(unitario)} each. If it's every month, the ${plan}-video monthly plan costs ${usd(p.mensual[plan])}.` : `${usd(unitario)} per video.` + (cantidad === 1 ? " From 2 videos it gets cheaper." : ""))
+      : plan
       ? `${usd(unitario)} c/u. Si es cada mes, con el plan mensual de ${plan} te salen por ${usd(p.mensual[plan])}.`
       : `${usd(unitario)} por video.` + (cantidad === 1 ? " Desde 2 videos te sale más barato." : "");
     const verLocal = tasas && moneda !== "USD";
@@ -443,11 +476,12 @@ if ($("#calcPaquete")) {
       const regalo = cantMensual === 30 ? p.regalo : 0, sueltos = p.suelto[0][1] * cantMensual;
       card.querySelector(".mes-total").textContent = usd(total);
       card.querySelector(".local").dataset.usd = total;
-      card.querySelector(".por-video").textContent = `${cantMensual} videos · ${usd(total / cantMensual)} por video`;
-      card.querySelector(".ahorro").textContent = `Ahorras ${usd(Math.round(sueltos - total))} al mes` + (regalo ? ` + ${regalo} gratis` : "");
-      const r = card.querySelector(".regalo"); r.hidden = !regalo; r.textContent = `+${regalo} GRATIS`;
-      const plan = `Plan mensual ${p.nombre}: ${cantMensual} videos${regalo ? ` + ${regalo} gratis` : ""} (${usd(total)} USD/mes)`;
-      card.querySelector(".mes-wa").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hola Avispa Studio 🎬 Quiero el ${plan}.`)}`;
+      card.querySelector(".por-video").textContent = `${cantMensual} videos · ${usd(total / cantMensual)} ${L("por video", "per video")}`;
+      card.querySelector(".ahorro").textContent = (EN ? `You save ${usd(Math.round(sueltos - total))} a month` : `Ahorras ${usd(Math.round(sueltos - total))} al mes`) + (regalo ? ` + ${regalo} ${L("gratis", "free")}` : "");
+      const r = card.querySelector(".regalo"); r.hidden = !regalo; r.textContent = `+${regalo} ${L("GRATIS", "FREE")}`;
+      const nombreP = EN && p.nombre === "Básico" ? "Basic" : p.nombre;
+      const plan = EN ? `${nombreP} monthly plan: ${cantMensual} videos${regalo ? ` + ${regalo} free` : ""} (${usd(total)} USD/month)` : `Plan mensual ${p.nombre}: ${cantMensual} videos${regalo ? ` + ${regalo} gratis` : ""} (${usd(total)} USD/mes)`;
+      card.querySelector(".mes-wa").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(EN ? `Hi Avispa Studio 🎬 I want the ${plan}.` : `Hola Avispa Studio 🎬 Quiero el ${plan}.`)}`;
     });
     calcular();
   };
@@ -461,10 +495,10 @@ if ($("#calcPaquete")) {
   fetch("https://open.er-api.com/v6/latest/USD").then(r => r.json()).then(d => {
     if (d.result !== "success") throw new Error("sin tasa");
     tasas = d.rates;
-    const fecha = new Date(d.time_last_update_unix * 1000).toLocaleDateString("es-CO", { day: "numeric", month: "long" });
-    $("#calcTasa").textContent = `Tasa del ${fecha}. El valor final te lo confirmamos al pagar.`;
+    const fecha = new Date(d.time_last_update_unix * 1000).toLocaleDateString(L("es-CO", "en-US"), { day: "numeric", month: "long" });
+    $("#calcTasa").textContent = EN ? `Rate as of ${fecha}. We confirm the final amount when you pay.` : `Tasa del ${fecha}. El valor final te lo confirmamos al pagar.`;
     calcular();
-  }).catch(() => $("#calcTasa").textContent = "No pudimos cargar la tasa de hoy; los precios están en dólares.");
+  }).catch(() => $("#calcTasa").textContent = L("No pudimos cargar la tasa de hoy; los precios están en dólares.", "We couldn't load today's rate; prices are in US dollars."));
 
   gsap.from(".ps", { y: 80, rotationX: -25, opacity: 0, duration: 1, ease: "expo.out", stagger: .12, scrollTrigger: { trigger: ".pasos-studio", start: "top 85%" } });
   gsap.from(".mensual, .largos, .calc", { y: 70, opacity: 0, duration: 1, ease: "expo.out", stagger: .12, scrollTrigger: { trigger: ".mensual", start: "top 88%" } });
@@ -486,13 +520,13 @@ if ($("#calcPaquete")) {
     aviso.innerHTML = `
       <div class="ac-ico">🍪</div>
       <div class="ac-txt">
-        <b>Tu privacidad nos importa</b>
-        <p>Usamos solo lo técnico para que la web funcione: <b>nada de publicidad ni rastreo</b>. Al continuar aceptas nuestra
-        <a href="${urlDatos}">Política de tratamiento de datos</a> y la <a href="${urlCookies}">Política de cookies</a>.</p>
+        <b>${L("Tu privacidad nos importa", "Your privacy matters to us")}</b>
+        <p>${EN ? `We only use what's technically needed for the website to work: <b>no ads and no tracking</b>. By continuing you accept our <a href="${urlDatos}">Personal Data Policy</a> and <a href="${urlCookies}">Cookie Policy</a>.`
+          : `Usamos solo lo técnico para que la web funcione: <b>nada de publicidad ni rastreo</b>. Al continuar aceptas nuestra <a href="${urlDatos}">Política de tratamiento de datos</a> y la <a href="${urlCookies}">Política de cookies</a>.`}</p>
       </div>
       <div class="ac-botones">
-        <button type="button" class="btn btn-oro" id="acAceptar">Aceptar</button>
-        <a class="btn btn-borde" href="${urlDatos}">Leer más</a>
+        <button type="button" class="btn btn-oro" id="acAceptar">${L("Aceptar", "Accept")}</button>
+        <a class="btn btn-borde" href="${urlDatos}">${L("Leer más", "Read more")}</a>
       </div>`;
     document.body.appendChild(aviso);
     gsap.fromTo(aviso, { y: 140, opacity: 0, rotationX: -30, transformPerspective: 900 },

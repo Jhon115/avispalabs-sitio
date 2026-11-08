@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var p=location.pathname,en=p==="/en"||p.indexOf("/en/")===0,g=localStorage.getItem("avispalabs-idioma"),ing=(navigator.language||"").toLowerCase().indexOf("en")===0;if(/bot|crawl|spider|slurp/i.test(navigator.userAgent))return;var quiere=g||(ing&&!en?"en":null);if(quiere==="en"&&!en)location.replace("/en"+p+location.search+location.hash);else if(quiere==="es"&&en)location.replace((p.slice(3)||"/")+location.search+location.hash)}catch(e){}})()</script>
 <script>try{if(sessionStorage.getItem("avispa-trans")==="1"&&!matchMedia("(prefers-reduced-motion: reduce)").matches){var r=document.documentElement;r.classList.add("trans");setTimeout(function(){r.classList.remove("trans")},4000)}}catch(e){}</script>
 <title>Términos y condiciones | AvispaLabs</title>
 <meta name="description" content="Uso de la web y servicios de AvispaLabs.">
@@ -21,6 +22,9 @@
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/css/estilos.css">
+<link rel="alternate" hreflang="es" href="https://avispalabs.com/legal/terminos/">
+<link rel="alternate" hreflang="en" href="https://avispalabs.com/en/legal/terminos/">
+<link rel="alternate" hreflang="x-default" href="https://avispalabs.com/legal/terminos/">
 </head>
 <body data-pagina="legal">
 <canvas id="panal3d" aria-hidden="true"></canvas>
@@ -36,6 +40,7 @@
     <a href="../../flow/" data-ir data-pagina="flow">Avispa Flow</a>
     <a href="../../studio/" data-ir data-pagina="studio">Avispa Studio</a>
     <a href="../../nosotros/" data-ir data-pagina="nosotros">Quiénes somos</a>
+    <div class="idiomas" translate="no"><a href="#" data-lang="es">ES</a><span>|</span><a href="#" data-lang="en">EN</a></div>
   </div>
   <a class="btn btn-oro" href="../../contacto/" data-ir>Hablemos</a>
   <button id="btnMenu" aria-label="Abrir menú"><i></i></button>

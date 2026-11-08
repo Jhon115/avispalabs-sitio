@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var p=location.pathname,en=p==="/en"||p.indexOf("/en/")===0,g=localStorage.getItem("avispalabs-idioma"),ing=(navigator.language||"").toLowerCase().indexOf("en")===0;if(/bot|crawl|spider|slurp/i.test(navigator.userAgent))return;var quiere=g||(ing&&!en?"en":null);if(quiere==="en"&&!en)location.replace("/en"+p+location.search+location.hash);else if(quiere==="es"&&en)location.replace((p.slice(3)||"/")+location.search+location.hash)}catch(e){}})()</script>
+<script>try{if(sessionStorage.getItem("avispa-trans")==="1"&&!matchMedia("(prefers-reduced-motion: reduce)").matches){var r=document.documentElement;r.classList.add("trans");setTimeout(function(){r.classList.remove("trans")},4000)}}catch(e){}</script>
+<title>Avispa Studio — Video editing | AvispaLabs</title>
+<meta name="description" content="Avispa Studio: vertical video editing with captions, motion graphics and rhythm. From $5 USD.">
+<meta name="theme-color" content="#0A0805">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+<meta property="og:title" content="Avispa Studio — Video editing | AvispaLabs">
+<meta property="og:description" content="Avispa Studio: vertical video editing with captions, motion graphics and rhythm. From $5 USD.">
+<meta property="og:image" content="https://avispalabs.com/assets/img/icono-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/estilos.css">
+<link rel="alternate" hreflang="es" href="https://avispalabs.com/studio/">
+<link rel="alternate" hreflang="en" href="https://avispalabs.com/en/studio/">
+<link rel="alternate" hreflang="x-default" href="https://avispalabs.com/studio/">
+</head>
+<body data-pagina="studio">
+<canvas id="panal3d" aria-hidden="true"></canvas>
+<div id="velo"></div>
+<div id="oscurecer"></div>
+<div id="progreso"></div>
+<div id="transicion" aria-hidden="true"><canvas></canvas><div class="t-logo"><span class="hex"><i></i></span></div></div>
+
+<nav id="barra">
+  <a href="../" data-ir class="logo"><span class="hex"><i></i></span><span>Avispa<b>Labs</b></span></a>
+  <div class="links">
+    <a href="../" data-ir data-pagina="inicio">Home</a>
+    <a href="../flow/" data-ir data-pagina="flow">Avispa Flow</a>
+    <a href="../studio/" data-ir data-pagina="studio">Avispa Studio</a>
+    <a href="../nosotros/" data-ir data-pagina="nosotros">About us</a>
+    <div class="idiomas" translate="no"><a href="#" data-lang="es">ES</a><span>|</span><a href="#" data-lang="en">EN</a></div>
+  </div>
+  <a class="btn btn-oro" href="../contacto/?s=studio" data-ir>Let's talk</a>
+  <button id="btnMenu" aria-label="Open menu"><i></i></button>
+</nav>
+
+<main>
+  <header class="hero interna" id="inicio">
+    <div id="voladora"><div class="avispa"><div class="ala i"></div><div class="ala d"></div><div class="cuerpo"></div><div class="ojo i"></div><div class="ojo d"></div></div></div>
+    <div class="hero-in">
+    <div class="kicker"><span class="pulso"></span>Avispa Studio · Video and marketing</div>
+    <h1 class="partir">From raw to <span class="ital">brutal.</span></h1>
+    <div class="lema ital">Avispa Studio</div>
+    <p class="sub">You film on your phone, even if you make mistakes. We cut it and add rhythm, captions, music and effects.</p>
+    <div class="acciones">
+      <a class="btn btn-oro" href="#paquetes">See packages</a>
+      <a class="btn btn-borde" href="#muestras">▶ See samples</a>
+    </div>
+    </div>
+  </header>
+
+  <section id="como" class="fondo-solido">
+    <div class="cont">
+      <div class="etiqueta">That's how easy it is</div>
+      <h2 class="partir">You film. We <span class="ital">sting.</span></h2>
+      <p class="intro">No editing skills or software needed. Just film.</p>
+      <div class="pasos-studio">
+        <div class="ps tilt-suave"><div class="ps-num">01</div><div class="ps-ico">📱</div><h4>Film</h4><p>On your phone, no fear. Even if you make mistakes or stutter, we cut that out.</p></div>
+        <div class="ps tilt-suave"><div class="ps-num">02</div><div class="ps-ico">📤</div><h4>Send it</h4><p>Message us, send your video and pick your package. You pay and we get started.</p></div>
+        <div class="ps tilt-suave"><div class="ps-num">03</div><div class="ps-ico">🚀</div><h4>Post it</h4><p>In 2 to 42 hours you get your edited video, vertical and ready to post.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="muestras" class="fondo-solido">
+    <div class="cont">
+      <div class="etiqueta">Before and after</div>
+      <h2 class="partir">See the <span class="ital">difference.</span></h2>
+      <p class="intro">The same video, before and after the wasp gets to it. Ready to post in 2 to 42 hours.</p>
+      <div class="muestras">
+        <figure class="muestra"><video src="../../assets/video/ejemplo-basico.mp4" poster="../../assets/img/ejemplo-basico.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><b>Basic</b>Podcast clip with captions</figcaption></figure>
+        <figure class="muestra"><video src="../../assets/video/ejemplo-pro.mp4" poster="../../assets/img/ejemplo-pro.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><b>Pro</b>Product with motion graphics</figcaption></figure>
+        <figure class="muestra"><video src="../../assets/video/ejemplo-premium.mp4" poster="../../assets/img/ejemplo-premium.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><b>Premium</b>Finca La Fe, single-origin coffee</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="paquetes" class="fondo-solido">
+    <div class="cont">
+      <div class="etiqueta">Pick your sting</div>
+      <h2 class="partir">Clear <span class="ital">pricing.</span></h2>
+      <p class="intro">Price per video. All include revision rounds.</p>
+      <div class="paquetes">
+        <div class="paquete tilt-suave">
+          <h4>Basic</h4><div class="precio">$5 <small>USD / video</small></div><div class="para">To start posting without the fear.</div>
+          <ul><li>Up to 30 seconds</li><li>Silence and mistake cuts</li><li>Clear captions</li><li>Vertical 9:16</li><li>1 revision round</li><li>Delivery in 2 to 30 hours</li></ul>
+          <a class="btn btn-borde wa" data-msg="Hi Avispa Studio 🎬 I want the Basic package ($5 USD)." href="https://wa.me/573163490524">I want Basic</a>
+        </div>
+        <div class="paquete top tilt-suave">
+          <span class="cinta">MOST POPULAR</span>
+          <h4>Pro</h4><div class="precio">$12 <small>USD / video</small></div><div class="para">So people don't hit "next".</div>
+          <ul><li>Up to 60 seconds</li><li>Animated captions with keywords</li><li>Basic motion graphics</li><li>Zooms, sound effects and music</li><li>Strong hook in 2 seconds</li><li>2 revision rounds</li></ul>
+          <a class="btn btn-oro wa" data-msg="Hi Avispa Studio 🎬 I want the Pro package ($12 USD)." href="https://wa.me/573163490524">I want Pro</a>
+        </div>
+        <div class="paquete tilt-suave">
+          <h4>Premium</h4><div class="precio">$20 <small>USD / video</small></div><div class="para">For brands that want to look big.</div>
+          <ul><li>Up to 90 seconds</li><li>Advanced motion graphics and 3D text</li><li>Transitions and camera effects</li><li>Cinema color grading</li><li>AI voice-over (optional)</li><li>3 revision rounds</li></ul>
+          <a class="btn btn-borde wa" data-msg="Hi Avispa Studio 🎬 I want the Premium package ($20 USD)." href="https://wa.me/573163490524">I want Premium</a>
+        </div>
+      </div>
+      <div class="mensual">
+        <span class="sello">MONTHLY PLANS</span>
+        <h3>The more videos, the cheaper each one</h3>
+        <p>For businesses that post often. Pay once a month and your content never stands still. With 30 videos you get extra videos free.</p>
+        <div class="cantidades" role="group" aria-label="Videos per month">
+          <button type="button" data-cant="6">6</button><button type="button" data-cant="12" class="activa">12</button><button type="button" data-cant="18">18</button><button type="button" data-cant="24">24</button><button type="button" data-cant="30">30 🎁</button>
+          <span class="nota">videos per month</span>
+        </div>
+        <div class="mensuales">
+          <div class="mes" data-tipo="basico">
+            <h4>Basic monthly <span class="regalo" hidden></span></h4>
+            <div class="mes-precio"><span class="mes-total"></span> <small>USD/month</small></div>
+            <div class="local"></div>
+            <p class="por-video"></p>
+            <p class="ahorro"></p>
+            <a href="https://wa.me/573163490524" class="btn btn-borde mes-wa" target="_blank" rel="noopener">Order on WhatsApp →</a>
+          </div>
+          <div class="mes destacado" data-tipo="pro">
+            <h4>Pro monthly <span class="regalo" hidden></span></h4>
+            <div class="mes-precio"><span class="mes-total"></span> <small>USD/month</small></div>
+            <div class="local"></div>
+            <p class="por-video"></p>
+            <p class="ahorro"></p>
+            <a href="https://wa.me/573163490524" class="btn btn-oro mes-wa" target="_blank" rel="noopener">Order on WhatsApp →</a>
+          </div>
+          <div class="mes" data-tipo="premium">
+            <h4>Premium monthly <span class="regalo" hidden></span></h4>
+            <div class="mes-precio"><span class="mes-total"></span> <small>USD/month</small></div>
+            <div class="local"></div>
+            <p class="por-video"></p>
+            <p class="ahorro"></p>
+            <a href="https://wa.me/573163490524" class="btn btn-borde mes-wa" target="_blank" rel="noopener">Order on WhatsApp →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="largos">
+        <div>
+          <span class="sello">LONG VIDEOS</span>
+          <h3>YouTube, podcast or gaming?</h3>
+          <p>Videos of 5, 20 minutes or more: podcast episodes, gameplay, tutorials or vlogs. Each one is different, so we'll talk price directly with you.</p>
+          <div class="chips-l"><span>🎙️ Podcast</span><span>🎮 Gaming</span><span>▶️ YouTube</span><span>✂️ Clips from the long video</span></div>
+        </div>
+        <a class="btn btn-oro wa" data-msg="Hi Avispa Studio! 🎬 I have a long video to edit.&#10;&#10;Type (podcast, gaming, YouTube…): &#10;Approximate length: &#10;What I need: " href="https://wa.me/573163490524">Get a quote on WhatsApp →</a>
+      </div>
+
+      <div class="calc">
+        <div>
+          <span class="sello">CALCULATOR</span>
+          <h3>See how much it costs</h3>
+          <p class="nota">At today's exchange rate, in your currency.</p>
+        </div>
+        <div class="calc-campos">
+          <label>Package
+            <select id="calcPaquete"><option value="basico">Basic ($5)</option><option value="pro" selected>Pro ($12)</option><option value="premium">Premium ($20)</option></select>
+          </label>
+          <label>Videos
+            <input id="calcCantidad" type="number" min="1" max="50" value="1" inputmode="numeric">
+          </label>
+          <label>Currency
+            <select id="calcMoneda"><option value="COP">Colombian pesos (COP)</option><option value="MXN">Mexican pesos (MXN)</option><option value="PEN">Peruvian soles (PEN)</option><option value="CLP">Chilean pesos (CLP)</option><option value="ARS">Argentine pesos (ARS)</option><option value="EUR">Euros (EUR)</option><option value="USD">US dollars (USD)</option></select>
+          </label>
+        </div>
+        <div class="calc-total">
+          <div class="calc-usd" id="calcUsd">$12 USD</div>
+          <div class="calc-local" id="calcLocal"></div>
+          <div class="nota" id="calcTasa">Checking today's rate…</div>
+          <div class="nota oro" id="calcTip" hidden></div>
+        </div>
+      </div>
+
+      <div class="siguiente"><a class="btn btn-borde" href="../flow/" data-ir>What if your WhatsApp sold on its own? See Avispa Flow →</a></div>
+    </div>
+  </section>
+
+  <section id="contacto" class="cierre fondo-solido">
+    <div class="cont">
+      <div class="etiqueta" style="justify-content:center">Stay sharp or stay unseen</div>
+      <h2 class="partir">Shall we edit your <span class="ital">next</span> video?</h2>
+      <p class="intro" style="margin-inline:auto">Tell us what your business needs. We reply the same day.</p>
+      <div class="acciones">
+        <a class="btn btn-wa wa" data-msg="Hi Avispa Studio 🎬 I want my videos edited." href="https://wa.me/573163490524">💬 Message us on WhatsApp</a>
+        <a class="btn btn-borde" href="mailto:jhon@avispalabs.com">✉️ Email us</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a href="../" data-ir class="logo"><span class="hex"><i></i></span><span>Avispa<b>Labs</b></span></a>
+  <div>© <span class="anio"></span> AvispaLabs · <a href="../flow/" data-ir>Avispa Flow</a> · <a href="../studio/" data-ir>Avispa Studio</a></div>
+  <div class="legal-links"><a href="../legal/privacidad/" data-ir>Data policy</a><a href="../legal/cookies/" data-ir>Cookies</a><a href="../legal/terminos/" data-ir>Terms</a></div>
+  <div class="redes"><a href="https://www.instagram.com/avispaedit" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@avispaedit" target="_blank" rel="noopener">TikTok</a></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
+<script src="../../assets/js/comun.js"></script>
+<script type="module" src="../../assets/js/panal3d.js"></script>
+</body>
+</html>

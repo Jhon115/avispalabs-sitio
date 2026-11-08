@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var p=location.pathname,en=p==="/en"||p.indexOf("/en/")===0,g=localStorage.getItem("avispalabs-idioma"),ing=(navigator.language||"").toLowerCase().indexOf("en")===0;if(/bot|crawl|spider|slurp/i.test(navigator.userAgent))return;var quiere=g||(ing&&!en?"en":null);if(quiere==="en"&&!en)location.replace("/en"+p+location.search+location.hash);else if(quiere==="es"&&en)location.replace((p.slice(3)||"/")+location.search+location.hash)}catch(e){}})()</script>
+<script>try{if(sessionStorage.getItem("avispa-trans")==="1"&&!matchMedia("(prefers-reduced-motion: reduce)").matches){var r=document.documentElement;r.classList.add("trans");setTimeout(function(){r.classList.remove("trans")},4000)}}catch(e){}</script>
+<title>Contact | AvispaLabs</title>
+<meta name="description" content="Write to us: AI automation (Avispa Flow) or video editing (Avispa Studio). We reply the same day.">
+<meta name="theme-color" content="#0A0805">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+<meta property="og:title" content="Contact | AvispaLabs">
+<meta property="og:description" content="Write to us: AI automation (Avispa Flow) or video editing (Avispa Studio). We reply the same day.">
+<meta property="og:image" content="https://avispalabs.com/assets/img/icono-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/estilos.css">
+<link rel="alternate" hreflang="es" href="https://avispalabs.com/contacto/">
+<link rel="alternate" hreflang="en" href="https://avispalabs.com/en/contacto/">
+<link rel="alternate" hreflang="x-default" href="https://avispalabs.com/contacto/">
+</head>
+<body data-pagina="contacto">
+<canvas id="panal3d" aria-hidden="true"></canvas>
+<div id="velo"></div>
+<div id="oscurecer"></div>
+<div id="progreso"></div>
+<div id="transicion" aria-hidden="true"><canvas></canvas><div class="t-logo"><span class="hex"><i></i></span></div></div>
+
+<nav id="barra">
+  <a href="../" data-ir class="logo"><span class="hex"><i></i></span><span>Avispa<b>Labs</b></span></a>
+  <div class="links">
+    <a href="../" data-ir data-pagina="inicio">Home</a>
+    <a href="../flow/" data-ir data-pagina="flow">Avispa Flow</a>
+    <a href="../studio/" data-ir data-pagina="studio">Avispa Studio</a>
+    <a href="../nosotros/" data-ir data-pagina="nosotros">About us</a>
+    <div class="idiomas" translate="no"><a href="#" data-lang="es">ES</a><span>|</span><a href="#" data-lang="en">EN</a></div>
+  </div>
+  <a class="btn btn-oro actual" href="../contacto/" data-ir>Let's talk</a>
+  <button id="btnMenu" aria-label="Open menu"><i></i></button>
+</nav>
+
+<main>
+  <header class="hero interna corta" id="inicio">
+    <div id="voladora"><div class="avispa"><div class="ala i"></div><div class="ala d"></div><div class="cuerpo"></div><div class="ojo i"></div><div class="ojo d"></div></div></div>
+    <div class="hero-in">
+    <div class="kicker"><span class="pulso"></span>Same-day reply</div>
+    <h1 class="partir">Let's talk about your <span class="ital">business.</span></h1>
+    <div class="lema ital">Work like a swarm.</div>
+    <p class="sub">Tell us what you need in 3 steps and we'll write back with a proposal. No strings attached.</p>
+    </div>
+  </header>
+
+  <section id="formulario" class="fondo-solido">
+    <div class="cont">
+      <form class="form-contacto" id="formContacto" onsubmit="return false">
+        <div class="paso-f">
+          <div class="pf-num">1</div>
+          <div class="paso-f-in">
+            <h3>What do you need?</h3>
+            <div class="opciones">
+              <label class="op"><input type="radio" name="servicio" value="flow"><span class="op-in"><span class="op-ico">🤖</span><b>Automate my business</b><small>Avispa Flow · AI and WhatsApp</small></span></label>
+              <label class="op"><input type="radio" name="servicio" value="studio"><span class="op-in"><span class="op-ico">🎬</span><b>Edit my videos</b><small>Avispa Studio · Video</small></span></label>
+              <label class="op"><input type="radio" name="servicio" value="ambos"><span class="op-in"><span class="op-ico">🐝</span><b>Both</b><small>Flow + Studio</small></span></label>
+              <label class="op"><input type="radio" name="servicio" value="otro"><span class="op-in"><span class="op-ico">💡</span><b>Something else</b><small>Tell us your idea</small></span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="paso-f" id="detalleFlow" hidden>
+          <div class="pf-num">2</div>
+          <div class="paso-f-in">
+            <h3>What would you like to automate?</h3>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="flow" value="Atender por WhatsApp 24/7"><span>24/7 WhatsApp service</span></label>
+              <label class="chip"><input type="checkbox" name="flow" value="Precios e inventario"><span>Prices and inventory</span></label>
+              <label class="chip"><input type="checkbox" name="flow" value="Verificar pagos"><span>Verify payments</span></label>
+              <label class="chip"><input type="checkbox" name="flow" value="Captar y seguir clientes"><span>Capture and follow up leads</span></label>
+              <label class="chip"><input type="checkbox" name="flow" value="Tareas repetitivas"><span>Repetitive tasks</span></label>
+              <label class="chip"><input type="checkbox" name="flow" value="Varias sedes"><span>Multiple locations</span></label>
+              <label class="chip"><input type="checkbox" name="flow" value="Aún no sé"><span>Not sure yet</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="paso-f" id="detalleStudio" hidden>
+          <div class="pf-num">2</div>
+          <div class="paso-f-in">
+            <h3>What type of editing?</h3>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="studio" value="Básico · $5"><span>Basic · $5</span></label>
+              <label class="chip"><input type="checkbox" name="studio" value="Pro · $12"><span>Pro · $12</span></label>
+              <label class="chip"><input type="checkbox" name="studio" value="Premium · $20"><span>Premium · $20</span></label>
+              <label class="chip"><input type="checkbox" name="studio" value="Plan mensual"><span>Monthly plan</span></label>
+              <label class="chip"><input type="checkbox" name="studio" value="Reels / TikTok"><span>Reels / TikTok</span></label>
+              <label class="chip"><input type="checkbox" name="studio" value="Video para marca"><span>Brand video</span></label>
+              <label class="chip"><input type="checkbox" name="studio" value="Aún no sé"><span>Not sure yet</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="paso-f">
+          <div class="pf-num" id="numDatos">2</div>
+          <div class="paso-f-in">
+            <h3>Your details</h3>
+            <div class="campos">
+              <label class="campo"><span>Your name</span><input id="cNombre" type="text" autocomplete="name" placeholder="E.g. Laura Smith"></label>
+              <label class="campo"><span>Your business <i>(optional)</i></span><input id="cNegocio" type="text" autocomplete="organization" placeholder="E.g. Hope Coffee"></label>
+              <label class="campo ancho"><span>Tell us a bit more <i>(optional)</i></span><textarea id="cMensaje" rows="3" placeholder="E.g. we get lots of messages asking about prices and can't keep up…"></textarea></label>
+            </div>
+          </div>
+        </div>
+
+        <label class="acepto"><input type="checkbox" id="cAcepto"><span>I accept the <a href="../legal/privacidad/" target="_blank">Personal Data Policy</a> and authorize AvispaLabs to use my data to reply and send me a quote.</span></label>
+
+        <div class="resumen">
+          <div class="res-cab">This is how your message will look:</div>
+          <div class="res-txt" id="cResumen">Choose what you need to build your message 🐝</div>
+          <div class="acciones-f">
+            <a class="btn btn-wa" id="cWa" href="#" target="_blank" rel="noopener">💬 Send on WhatsApp</a>
+            <a class="btn btn-borde" id="cCorreo" href="#">✉️ Send by email</a>
+          </div>
+          <p class="aviso" id="cAviso"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a href="../" data-ir class="logo"><span class="hex"><i></i></span><span>Avispa<b>Labs</b></span></a>
+  <div>© <span class="anio"></span> AvispaLabs · <a href="../flow/" data-ir>Avispa Flow</a> · <a href="../studio/" data-ir>Avispa Studio</a></div>
+  <div class="legal-links"><a href="../legal/privacidad/" data-ir>Data policy</a><a href="../legal/cookies/" data-ir>Cookies</a><a href="../legal/terminos/" data-ir>Terms</a></div>
+  <div class="redes"><a href="https://www.instagram.com/avispaedit" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@avispaedit" target="_blank" rel="noopener">TikTok</a></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
+<script src="../../assets/js/comun.js"></script>
+<script type="module" src="../../assets/js/panal3d.js"></script>
+</body>
+</html>
