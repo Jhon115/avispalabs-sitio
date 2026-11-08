@@ -533,3 +533,45 @@ nav.solida { background: rgba(10,8,5,.93); }
 }
 
 @media (max-width: 360px) { nav .btn { padding: 8px 10px; font-size: 12px; } .logo { font-size: 16px; } }
+
+/* ---------- paquetes empresariales de Avispa Flow ---------- */
+.paq-flow { grid-template-columns: repeat(3, 1fr); grid-template-rows: none; align-items: stretch; }
+.pf { display: flex; flex-direction: column; padding: 30px 26px; border-color: rgba(255,196,0,.2); background: linear-gradient(170deg, rgba(30,23,12,.96), rgba(13,10,6,.97)); }
+.pf .estado { position: static; align-self: flex-start; margin-bottom: 16px; }
+.pf.pronto { opacity: 1; }
+.pf.pronto::after { display: none; }
+.pf.pronto h4, .pf.pronto .pf-ico { filter: none; }
+.pf.pronto:hover { border-color: rgba(255,196,0,.5); }
+.pf.disponible, .pf.medida { grid-column: 1 / -1; grid-row: auto; display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(22px, 4vw, 54px); padding: clamp(26px, 3.4vw, 44px); align-items: center; }
+.pf-lado { display: flex; flex-direction: column; align-items: flex-start; }
+.pf .estado.oro { background: rgba(255,196,0,.14); color: var(--oro); border-color: rgba(255,196,0,.45); }
+.pf.disponible .btn, .pf.medida .btn { margin-top: 22px; align-self: flex-start; }
+.pf-resuelve { margin-top: 14px; font-size: 14.5px; line-height: 1.55; color: #CFC6B7; }
+.pf-resuelve b { color: var(--crema); font-weight: 800; }
+.pf-rotulo { font-size: 12px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; color: var(--oro); margin-bottom: 14px; }
+.pf-lista { list-style: none; margin-top: 16px; display: grid; gap: 10px; font-size: 14.5px; line-height: 1.45; color: #E3DBCD; }
+.pf-incluye .pf-lista { margin-top: 0; font-size: 15.5px; }
+.pf-lista li { position: relative; padding-left: 22px; }
+.pf-lista li::before { content: ""; position: absolute; left: 0; top: 4px; width: 11px; height: 13px; background: var(--oro); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+.pf-ideal { margin-top: 14px; font-size: 13.5px; font-weight: 700; color: var(--oro); }
+.pf-valor { margin-top: auto; padding: 18px 0 0; font-size: 15.5px; line-height: 1.45; font-weight: 800; color: var(--crema); position: relative; }
+.pf:not(.disponible):not(.medida) .pf-valor { margin-top: 20px; border-top: 1px solid var(--linea); }
+.pf:not(.disponible):not(.medida) .pf-lista { flex: 1; }
+.pf.disponible .pf-valor, .pf.medida .pf-valor { margin-top: 18px; padding: 14px 18px; border-left: 3px solid var(--oro); background: rgba(255,196,0,.08); border-radius: 0 12px 12px 0; }
+.pf.reina { grid-column: span 2; border-color: rgba(255,196,0,.5); background: linear-gradient(150deg, rgba(255,196,0,.13), rgba(13,10,6,.97) 55%); }
+.pf.reina .pf-lista { grid-template-columns: 1fr 1fr; align-content: start; }
+.pf.medida { border-color: rgba(255,196,0,.6); background: linear-gradient(120deg, #1F180B, #0D0A06 60%); box-shadow: 0 0 80px rgba(255,196,0,.14); }
+.pf.medida h4 { font-size: clamp(30px, 3.2vw, 44px); }
+.pf.medida .pf-ico { width: 84px; height: 96px; font-size: 40px; background: linear-gradient(160deg, var(--oro), var(--oro2)); }
+.pf.medida .pf-tipo { font-size: 16px; line-height: 1.5; color: var(--crema); font-weight: 700; }
+@media (max-width: 900px) {
+  .paq-flow { grid-template-columns: 1fr 1fr; }
+  .pf.disponible, .pf.medida { grid-template-columns: 1fr; }
+  .pf.reina { grid-column: 1 / -1; }
+}
+@media (max-width: 620px) {
+  .paq-flow { grid-template-columns: 1fr; }
+  .pf.reina { grid-column: auto; }
+  .pf.reina .pf-lista { grid-template-columns: 1fr; }
+  .pf.disponible .btn, .pf.medida .btn { align-self: stretch; justify-content: center; }
+}

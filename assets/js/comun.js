@@ -30,23 +30,23 @@ llenar($("#fila2"), L(["Inteligencia artificial", "Reels que venden", "Paneles d
 // pasos de las avispitas
 const PASOS_ES = [
   ["💬", "Recibe", "Contesta cada mensaje de WhatsApp al instante, de día o de noche."],
-  ["📦", "Busca", "Consulta precios e inventario real de cada sede."],
+  ["📦", "Busca", "Consulta información del negocio mediante integraciones disponibles."],
   ["🎤", "Escucha", "Entiende notas de voz como si fuera una persona."],
   ["🧾", "Verifica", "Lee comprobantes de pago y los deja listos para aprobar."],
   ["📸", "Reconoce", "Identifica productos con solo una foto."],
   ["🛡️", "Filtra", "Bloquea spam e intentos de engaño."],
   ["🙋", "Avisa", "Le pasa el chat a un asesor humano cuando hace falta."],
-  ["📊", "Reporta", "Pagos, casos e inventario quedan en tu panel."]
+  ["📊", "Reporta", "Pagos, casos y conversaciones quedan en tu panel."]
 ];
 const PASOS = EN ? [
   ["💬", "Receives", "Answers every WhatsApp message instantly, day or night."],
-  ["📦", "Searches", "Checks real prices and inventory at each location."],
+  ["📦", "Searches", "Looks up business information through available integrations."],
   ["🎤", "Listens", "Understands voice notes as if it were a person."],
   ["🧾", "Verifies", "Reads payment receipts and leaves them ready to approve."],
   ["📸", "Recognizes", "Identifies products from a single photo."],
   ["🛡️", "Filters", "Blocks spam and scam attempts."],
   ["🙋", "Alerts", "Hands the chat to a human agent when needed."],
-  ["📊", "Reports", "Payments, cases and inventory all land in your dashboard."]
+  ["📊", "Reports", "Payments, cases and conversations all land in your dashboard."]
 ] : PASOS_ES;
 const avispaHTML = `<div class="avispa"><div class="ala i"></div><div class="ala d"></div><div class="cuerpo"></div><div class="ojo i"></div><div class="ojo d"></div></div>`;
 if ($("#carril")) $("#carril").innerHTML = PASOS.map(([ico, t, d], i) =>
