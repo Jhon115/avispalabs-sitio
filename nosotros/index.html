@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>try{if(sessionStorage.getItem("avispa-trans")==="1"&&!matchMedia("(prefers-reduced-motion: reduce)").matches){var r=document.documentElement;r.classList.add("trans");setTimeout(function(){r.classList.remove("trans")},4000)}}catch(e){}</script>
+<title>Quiénes somos | AvispaLabs</title>
+<meta name="description" content="AvispaLabs nació en el Valle del Cauca para que los negocios pequeños y medianos tengan las herramientas de una empresa grande.">
+<meta name="theme-color" content="#0A0805">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<meta property="og:title" content="Quiénes somos | AvispaLabs">
+<meta property="og:description" content="AvispaLabs nació en el Valle del Cauca para que los negocios pequeños y medianos tengan las herramientas de una empresa grande.">
+<meta property="og:image" content="https://avispalabs.com/assets/img/icono-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/estilos.css">
+</head>
+<body data-pagina="nosotros">
+<canvas id="panal3d" aria-hidden="true"></canvas>
+<div id="velo"></div>
+<div id="oscurecer"></div>
+<div id="progreso"></div>
+<div id="transicion" aria-hidden="true"><canvas></canvas><div class="t-logo"><span class="hex"><i></i></span></div></div>
+
+<nav id="barra">
+  <a href="../" data-ir class="logo"><span class="hex"><i></i></span><span>Avispa<b>Labs</b></span></a>
+  <div class="links">
+    <a href="../" data-ir data-pagina="inicio">Inicio</a>
+    <a href="../flow/" data-ir data-pagina="flow">Avispa Flow</a>
+    <a href="../studio/" data-ir data-pagina="studio">Avispa Studio</a>
+    <a href="../nosotros/" data-ir data-pagina="nosotros">Quiénes somos</a>
+  </div>
+  <a class="btn btn-oro" href="../contacto/" data-ir>Hablemos</a>
+  <button id="btnMenu" aria-label="Abrir menú"><i></i></button>
+</nav>
+
+<main>
+  <header class="hero interna corta nosotros-hero" id="inicio">
+    <div id="voladora"><div class="avispa"><div class="ala i"></div><div class="ala d"></div><div class="cuerpo"></div><div class="ojo i"></div><div class="ojo d"></div></div></div>
+    <div class="hero-in">
+    <div class="kicker"><span class="pulso"></span>Desde el Valle del Cauca</div>
+    <h1 class="partir">Quiénes <span class="ital">somos</span></h1>
+    <div class="lema ital">¡Avíspese, ome!</div>
+    </div>
+  </header>
+
+  <section id="historia" class="fondo-solido">
+    <div class="cont">
+      <div class="etiqueta">Nuestra historia</div>
+      <h2 class="partir">Así <span class="ital">nacimos.</span></h2>
+      <p class="historia-txt">AvispaLabs nació en el Valle del Cauca para que los negocios pequeños y medianos tengan las herramientas de una empresa grande, sin enredos y hablando claro.</p>
+    </div>
+  </section>
+
+  <section id="mision" class="fondo-solido">
+    <div class="cont">
+      <div class="etiqueta">Lo que nos mueve</div>
+      <h2 class="partir">Misión y <span class="ital">visión.</span></h2>
+      <div class="beneficios dos">
+        <div class="beneficio tilt-suave"><div class="ico">🎯</div><h4>Misión</h4><p>Que ningún negocio se quede atrás por no tener tiempo, equipo o tecnología.</p></div>
+        <div class="beneficio tilt-suave"><div class="ico">🐝</div><h4>Visión</h4><p>Llevar a más negocios de Latinoamérica a trabajar como un enjambre: organizados, rápidos y sin descanso.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="puertas" class="fondo-solido">
+    <div class="cont">
+      <div class="etiqueta">Lo que hacemos</div>
+      <h2 class="partir">¿Por dónde <span class="ital">empezamos?</span></h2>
+      <div class="puertas">
+        <a class="puerta tilt" href="../flow/" data-ir>
+          <div class="brillo"></div><div class="celdas"></div>
+          <div class="icono">🤖</div>
+          <div class="marca">AvispaLabs presenta</div>
+          <h3>Avispa <span class="oro">Flow</span></h3>
+          <p>Asistentes de WhatsApp con IA que atienden, venden y organizan tu negocio las 24 horas.</p>
+          <span class="ir">Entrar a Avispa Flow <b>→</b></span>
+        </a>
+        <a class="puerta tilt" href="../studio/" data-ir>
+          <div class="brillo"></div><div class="celdas"></div>
+          <div class="icono">🎬</div>
+          <div class="marca">AvispaLabs presenta</div>
+          <h3>Avispa <span class="oro">Studio</span></h3>
+          <p>Tú grabas, nosotros editamos. Videos verticales que hacen que la gente se quede.</p>
+          <span class="ir">Entrar a Avispa Studio <b>→</b></span>
+        </a>
+      </div>
+      <div class="siguiente"><a class="btn btn-oro" href="../contacto/" data-ir>Hablemos →</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a href="../" data-ir class="logo"><span class="hex"><i></i></span><span>Avispa<b>Labs</b></span></a>
+  <div>© <span class="anio"></span> AvispaLabs · <a href="../flow/" data-ir>Avispa Flow</a> · <a href="../studio/" data-ir>Avispa Studio</a></div>
+  <div class="legal-links"><a href="../legal/privacidad/" data-ir>Política de datos</a><a href="../legal/cookies/" data-ir>Cookies</a><a href="../legal/terminos/" data-ir>Términos</a></div>
+  <div class="redes"><a href="https://www.instagram.com/avispaedit" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@avispaedit" target="_blank" rel="noopener">TikTok</a></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
+<script src="../assets/js/comun.js"></script>
+<script type="module" src="../assets/js/panal3d.js"></script>
+</body>
+</html>
