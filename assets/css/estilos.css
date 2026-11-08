@@ -641,3 +641,6 @@ button.avi-ayuda { background: none; border: 0; padding: 0; font: inherit; }
 
 /* avispita del inicio viajando hacia el botón de Vera */
 .avi-viajera { position: fixed; left: 0; top: 0; width: 54px; height: 72px; z-index: 46; pointer-events: none; will-change: transform; filter: drop-shadow(0 10px 16px rgba(0,0,0,.55)); }
+
+/* avispita de vuelo libre */
+.avi-guia { position: fixed; z-index: 40; transition: opacity .5s; }

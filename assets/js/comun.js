@@ -551,43 +551,54 @@ if ($("#calcPaquete")) {
 // ---------- superposiciones: avispita guía, avispita de ayuda y hexágonos flotantes ----------
 if (!REDUCIR) {
   const chico = innerWidth < 760;
-  // Avispita guía: se posa en cada título y vuela al siguiente mientras bajas
-  const titulos = $$("section h2.partir").filter(h => !h.closest("#paquetes"));
-  if (titulos.length > 1) {
-    const principal = $("main");
-    const guia = document.createElement("div");
-    guia.className = "avi-guia"; guia.setAttribute("aria-hidden", "true"); guia.innerHTML = avispaHTML;
-    principal.appendChild(guia);
-    gsap.set(guia, { scale: chico ? .55 : .7, transformOrigin: "50% 100%" });
-    const ponerX = gsap.quickSetter(guia, "x", "px"), ponerY = gsap.quickSetter(guia, "y", "px"), ponerR = gsap.quickSetter(guia, "rotation", "deg");
-    let puntos = [], ocultoDesde = Infinity, ocultoHasta = -Infinity;
-    const medir = () => {
-      const m = principal.getBoundingClientRect(), ancho = principal.clientWidth;
-      puntos = titulos.map(h => {
-        const pal = $$(".w", h), u = pal[pal.length - 1].getBoundingClientRect();
-        const cabe = u.right - m.left + 62 < ancho;
-        const arriba = h.getBoundingClientRect().top - m.top;
-        return { x: cabe ? u.right - m.left + 4 : ancho - 58, y: cabe ? u.top - m.top - 14 : arriba - 62, disparo: u.top + scrollY - innerHeight * .42 };
-      });
-      const paq = $("#paquetes");
-      if (paq) { const r = paq.getBoundingClientRect(); ocultoDesde = r.top + scrollY - innerHeight * .7; ocultoHasta = r.bottom + scrollY - innerHeight * .3; }
+  // Avispita libre: vuela por la pantalla como un insecto, con cambios de rumbo y pausas (no estorba los clics)
+  if (pagina !== "legal") {
+    const libre = document.createElement("div");
+    libre.className = "avi-guia"; libre.setAttribute("aria-hidden", "true"); libre.innerHTML = avispaHTML;
+    document.body.appendChild(libre);
+    gsap.set(libre, { scale: chico ? .5 : .62, transformOrigin: "50% 50%" });
+    const ponX = gsap.quickSetter(libre, "x", "px"), ponY = gsap.quickSetter(libre, "y", "px"), ponR = gsap.quickSetter(libre, "rotation", "deg");
+    const azar = (a, b) => a + Math.random() * (b - a);
+    const rapidez = chico ? 120 : 210;
+    let x = azar(40, innerWidth - 90), y = azar(120, innerHeight - 140), vx = 0, vy = 0, ang = 0, destX = x, destY = y, pausa = 0, t0 = 0;
+    // prefiere los costados para no tapar lo que la gente está leyendo
+    const nuevoDestino = () => {
+      const W = innerWidth, H = innerHeight;
+      const costado = Math.random() < .68;
+      destX = costado ? (Math.random() < .5 ? azar(10, W * .2) : azar(W * .8 - 40, W - 60)) : azar(40, W - 90);
+      destY = azar(95, H - 150);
     };
-    const colocar = () => {
-      if (!puntos.length) return;
-      const s = scrollY, ult = puntos.length - 1;
-      guia.classList.toggle("ver", s > puntos[0].disparo - innerHeight * .25 && !(s > ocultoDesde && s < ocultoHasta));
-      let i = 0;
-      while (i < ult - 1 && s >= puntos[i + 1].disparo) i++;
-      const a = puntos[i], b = puntos[i + 1];
-      const t = Math.max(0, Math.min(1, (s - a.disparo) / Math.max(1, b.disparo - a.disparo)));
-      const f = Math.max(0, Math.min(1, (t - .14) / .72)), e = f * f * (3 - 2 * f);
-      ponerX(a.x + (b.x - a.x) * e + Math.sin(f * Math.PI * 2) * (chico ? 22 : 70));
-      ponerY(a.y + (b.y - a.y) * e - Math.sin(f * Math.PI) * 40);
-      ponerR(e * 360);
-    };
-    medir(); colocar();
-    ScrollTrigger.create({ start: 0, end: "max", onUpdate: colocar });
-    ScrollTrigger.addEventListener("refresh", () => { medir(); colocar(); });
+    nuevoDestino();
+    const zonaSeria = () => { const p = $("#paquetes"); if (!p) return false; const r = p.getBoundingClientRect(); return r.top < innerHeight * .6 && r.bottom > innerHeight * .3; };
+    gsap.ticker.add((tiempo, delta) => {
+      const ver = document.body.classList.contains("ya-bajo") && !document.body.classList.contains("vera-abierta") && !zonaSeria();
+      libre.classList.toggle("ver", ver);
+      if (!ver || document.hidden) return;
+      const dt = Math.min(delta, 50) / 1000;
+      t0 += dt;
+      if (pausa > 0) {
+        pausa -= dt;
+        vx *= .9; vy *= .9;
+      } else {
+        const dx = destX - x, dy = destY - y, d = Math.hypot(dx, dy);
+        if (d < 26) { nuevoDestino(); if (Math.random() < .5) pausa = azar(.35, 1.3); }
+        const vel = rapidez * (.75 + .25 * Math.sin(t0 * 2.1));
+        vx += (dx / (d || 1) * vel - vx) * Math.min(1, dt * 2.6);
+        vy += (dy / (d || 1) * vel - vy) * Math.min(1, dt * 2.6);
+      }
+      // zigzag propio de un insecto
+      const zig = Math.sin(t0 * 9) * 26, zag = Math.cos(t0 * 7.3) * 18;
+      x += (vx + zig * (pausa > 0 ? .25 : 1)) * dt;
+      y += (vy + zag * (pausa > 0 ? .25 : 1)) * dt;
+      x = Math.max(-10, Math.min(innerWidth - 44, x));
+      y = Math.max(70, Math.min(innerHeight - 60, y));
+      // mira hacia donde vuela
+      if (Math.hypot(vx, vy) > 25) {
+        const obj = Math.atan2(vy, vx) * 180 / Math.PI + 90;
+        ang += ((obj - ang + 540) % 360 - 180) * Math.min(1, dt * 6);
+      }
+      ponX(x); ponY(y); ponR(ang);
+    });
   }
   // Avispita de ayuda: cada rato saca el globito
   const ayuda = $("#aviAyuda");
