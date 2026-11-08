@@ -57,49 +57,113 @@ $$(".partir").forEach(el => {
   recorrer(el);
 });
 
-// ---------- transición de panal entre páginas ----------
+// ---------- transición de panal entre páginas (un solo canvas: mucho más liviano y sin parpadeo) ----------
+// Al llegar, el CSS ya tapa la página de dorado antes del primer pintado (clase "trans", puesta en el <head>).
+// La página nueva se destapa solo cuando las letras y el panal 3D ya están listos.
+const raizDoc = document.documentElement;
 const capa = $("#transicion");
-const COLS_T = innerWidth < 760 ? 6 : 12;
-if (capa) {
-  const R = innerWidth / COLS_T / Math.sqrt(3) * 1.18, dx = Math.sqrt(3) * R, dy = 1.5 * R;
-  const filas = Math.ceil(innerHeight / dy) + 2;
-  let html = "";
-  for (let r = -1; r < filas; r++) for (let q = -1; q <= COLS_T; q++) {
-    const x = q * dx + (r % 2 ? dx / 2 : 0), y = r * dy;
-    html += `<i style="left:${x - R}px;top:${y - R}px;width:${dx + 2}px;height:${2 * R + 2}px"></i>`;
+const lienzoT = capa && $("canvas", capa);
+const ctxT = lienzoT && lienzoT.getContext("2d");
+const COLORES_T = ["#FFC400", "#E0A800", "#B8860B"];
+const entrando = raizDoc.classList.contains("trans");
+try { sessionStorage.removeItem("avispa-trans"); } catch (e) {}
+window.__panalPausa = entrando;
+let celdasT = [], radioT = 0, anchoT = 0, altoT = 0, saliendo = false;
+const prepararT = () => {
+  const dpr = Math.min(devicePixelRatio || 1, 1.5);
+  anchoT = innerWidth; altoT = innerHeight;
+  lienzoT.width = Math.ceil(anchoT * dpr); lienzoT.height = Math.ceil(altoT * dpr);
+  ctxT.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const cols = anchoT < 760 ? 5 : 10;
+  const dx = anchoT / cols * 1.1; radioT = dx / Math.sqrt(3);
+  const dy = 1.5 * radioT, filas = Math.ceil(altoT / dy) + 1;
+  celdasT = [];
+  let max = 1;
+  for (let r = -1; r <= filas; r++) for (let q = -1; q <= cols + 1; q++) {
+    const x = q * dx + (r & 1 ? dx / 2 : 0), y = r * dy;
+    const d = Math.hypot(x - anchoT / 2, y - altoT / 2);
+    max = Math.max(max, d);
+    celdasT.push({ x, y, d, c: (q * 3 + r * 7) & 3 });
   }
-  capa.innerHTML = html + `<div class="t-logo"><span class="hex"><i></i></span></div>`;
-}
-const celdas = capa ? $$("i", capa).filter(e => e.parentElement === capa) : [];
-const centroOrden = (i) => {
-  const r = celdas[i].getBoundingClientRect();
-  return Math.hypot(r.left + r.width / 2 - innerWidth / 2, r.top + r.height / 2 - innerHeight / 2);
+  celdasT.forEach(c => c.d /= max);
 };
-// al llegar: el panal se abre desde el centro hacia afuera
-if (capa) {
-  const entrando = sessionStorage.getItem("avispa-trans") === "1";
-  sessionStorage.removeItem("avispa-trans");
-  if (entrando && !REDUCIR) {
-    gsap.set(capa, { autoAlpha: 1 }); gsap.set(celdas, { scale: 1.02 });
-    gsap.to(".t-logo", { scale: 0, rotation: 90, duration: .35, ease: "back.in(2)" });
-    gsap.to(celdas, { scale: 0, rotation: 60, duration: .55, ease: "power3.in", delay: .15,
-      stagger: { each: .012, from: "center", grid: "auto" }, onComplete: () => gsap.set(capa, { autoAlpha: 0 }) });
-  } else gsap.set(capa, { autoAlpha: 0 });
-}
-// al salir: el panal cubre la pantalla y luego cambia de página
-const irA = (url) => {
+const dibujarT = (p, abrir) => {
+  ctxT.clearRect(0, 0, anchoT, altoT);
+  const caminos = [new Path2D(), new Path2D(), new Path2D()];
+  for (const c of celdasT) {
+    const retraso = (abrir ? c.d : 1 - c.d) * .55;
+    const t = Math.min(1, Math.max(0, (p - retraso) / .45));
+    const s = abrir ? 1 - t * t * t : 1 - Math.pow(1 - t, 3);
+    if (s < .01) continue;
+    const giro = (1 - s) * 1.05, R = radioT * 1.04 * s;
+    const camino = caminos[s > .995 ? 0 : (c.c % 3)];
+    for (let i = 0; i < 6; i++) {
+      const a = giro + Math.PI / 6 + i * Math.PI / 3, vx = c.x + R * Math.cos(a), vy = c.y + R * Math.sin(a);
+      i ? camino.lineTo(vx, vy) : camino.moveTo(vx, vy);
+    }
+    camino.closePath();
+  }
+  caminos.forEach((cam, i) => { ctxT.fillStyle = COLORES_T[i]; ctxT.fill(cam); });
+};
+const animarT = (duracion, abrir, alAvanzar, fin) => {
+  const ini = performance.now();
+  const paso = ahora => {
+    const p = Math.min(1, (ahora - ini) / duracion);
+    dibujarT(p, abrir); alAvanzar && alAvanzar(p);
+    p < 1 ? requestAnimationFrame(paso) : fin();
+  };
+  requestAnimationFrame(paso);
+};
+const iraA = url => {
+  if (saliendo) return;
   if (!capa || REDUCIR) { location.href = url; return; }
-  sessionStorage.setItem("avispa-trans", "1");
-  gsap.set(capa, { autoAlpha: 1 }); gsap.set(celdas, { scale: 0, rotation: -60 }); gsap.set(".t-logo", { scale: 0, rotation: -90 });
-  gsap.to(celdas, { scale: 1.02, rotation: 0, duration: .45, ease: "power3.out", stagger: { each: .01, from: "edges", grid: "auto" } });
-  gsap.to(".t-logo", { scale: 1, rotation: 0, duration: .45, ease: "back.out(2)", delay: .35, onComplete: () => location.href = url });
+  saliendo = true;
+  prepararT();
+  capa.classList.add("activa");
+  window.__panalPausa = true; // el panal 3D descansa mientras corre la transición
+  animarT(400, false, p => { if (p > .6) capa.classList.add("logo"); }, () => {
+    try { sessionStorage.setItem("avispa-trans", "1"); } catch (e) {}
+    location.href = url;
+  });
 };
+const destapar = () => {
+  prepararT();
+  dibujarT(0, true);
+  capa.classList.add("abriendo");
+  window.__panalPausa = false;
+  if (window.__tlHero) window.__tlHero.play();
+  setTimeout(() => animarT(460, true, null, () => {
+    raizDoc.classList.remove("trans");
+    capa.classList.remove("abriendo");
+    ctxT.clearRect(0, 0, anchoT, altoT);
+  }), 110);
+};
+if (capa && entrando) {
+  const panalListo = new Promise(ok => window.__panalListo ? ok() : addEventListener("panal:listo", ok, { once: true }));
+  const letras = document.fonts ? document.fonts.ready : Promise.resolve();
+  const limite = new Promise(ok => setTimeout(ok, 1000)); // nunca dejar a nadie esperando más de 1 segundo
+  Promise.race([Promise.all([panalListo, letras]), limite]).then(destapar);
+}
 $$("a[data-ir]").forEach(a => a.addEventListener("click", e => {
   if (e.metaKey || e.ctrlKey) return;
-  e.preventDefault(); irA(a.getAttribute("href"));
+  e.preventDefault(); iraA(a.getAttribute("href"));
 }));
 // al volver con el botón "atrás" del navegador, quitar la capa
-addEventListener("pageshow", e => { if (e.persisted && capa) gsap.set(capa, { autoAlpha: 0 }); });
+addEventListener("pageshow", e => {
+  if (!e.persisted || !capa) return;
+  saliendo = false; window.__panalPausa = false;
+  capa.classList.remove("activa", "logo", "abriendo"); raizDoc.classList.remove("trans");
+  ctxT.clearRect(0, 0, anchoT, altoT);
+});
+// cargar las otras páginas por adelantado para que abran al instante
+const adelantar = () => {
+  if (navigator.connection && navigator.connection.saveData) return;
+  [...new Set($$("nav a[data-ir], .puerta[data-ir], .siguiente a[data-ir]").map(a => a.href))].forEach(href => {
+    if (href === location.href) return;
+    const l = document.createElement("link"); l.rel = "prefetch"; l.href = href; document.head.appendChild(l);
+  });
+};
+"requestIdleCallback" in window ? requestIdleCallback(adelantar, { timeout: 3000 }) : setTimeout(adelantar, 2500);
 
 // ---------- movimiento ----------
 gsap.registerPlugin(ScrollTrigger);
@@ -124,18 +188,19 @@ ScrollTrigger.create({ start: 0, end: "max", onUpdate: s => {
 }});
 
 // entrada del hero
-const tlHero = gsap.timeline({ delay: sessionStorage.getItem("x") ? 0 : .15 });
+const tlHero = gsap.timeline({ delay: entrando ? 0 : .15, paused: entrando });
+window.__tlHero = tlHero;
 tlHero.from(".kicker", { y: 20, opacity: 0, duration: .7, ease: "power3.out" })
   .from(".hero h1 .w > span", { yPercent: 110, rotationX: -85, opacity: 0, duration: 1, ease: "expo.out", stagger: .06 }, "-=.4")
-  .from(".hero .lema", { y: 30, scale: .8, opacity: 0, filter: "blur(12px)", duration: .9, ease: "expo.out" }, "-=.6")
+  .from(".hero .lema", { y: 30, scale: .8, opacity: 0, duration: .9, ease: "expo.out" }, "-=.6")
   .from(".hero .sub", { y: 20, opacity: 0, duration: .7, ease: "power3.out" }, "-=.6")
   .from(".hero .acciones .btn", { y: 20, opacity: 0, duration: .6, ease: "back.out(2)", stagger: .1 }, "-=.5")
   .from(".bajar", { opacity: 0, duration: .6 }, "-=.3");
 
 // el hero se aleja al bajar y el panal 3D se desarma
 // Solo mueve la caja .hero-in (no los textos), con valores de inicio fijos: así al volver a subir el mensaje siempre reaparece.
-gsap.fromTo(".hero-in", { yPercent: 0, opacity: 1, scale: 1, filter: "blur(0px)" },
-  { yPercent: -18, opacity: 0, scale: .92, filter: "blur(6px)", ease: "none", immediateRender: false,
+gsap.fromTo(".hero-in", { yPercent: 0, opacity: 1, scale: 1 },
+  { yPercent: -18, opacity: 0, scale: .92, ease: "none", immediateRender: false,
     scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });gsap.to("#oscurecer", { opacity: .35, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
 ScrollTrigger.create({ trigger: ".hero", start: "top top", end: "bottom top", onUpdate: s => window.__scroll.p = s.progress });
 
@@ -165,10 +230,14 @@ $$("section .etiqueta, section .intro").forEach(el => gsap.from(el, { y: 26, opa
 // franja: se mueve sola y acelera con la velocidad del scroll
 const f1 = $("#fila1"), f2 = $("#fila2");
 if (f1) {
-  let off = 0;
+  let off = 0, anchoFranja = f1.scrollWidth / 3, franjaVisible = true;
+  addEventListener("resize", () => anchoFranja = f1.scrollWidth / 3, { passive: true });
+  if (document.fonts) document.fonts.ready.then(() => anchoFranja = f1.scrollWidth / 3);
+  new IntersectionObserver(([e]) => franjaVisible = e.isIntersecting).observe($(".franja"));
   gsap.ticker.add(() => {
+    if (!franjaVisible) return;
     const v = Math.min(Math.abs(window.__scroll.v) / 400, 6);
-    off += 0.6 + v; const w = f1.scrollWidth / 3;
+    off += 0.6 + v; const w = anchoFranja;
     gsap.set(f1, { x: -(off % w) }); gsap.set(f2, { x: -w + (off % w) });
   });
 }
@@ -178,7 +247,7 @@ const inclinar = (sel, fuerza) => $$(sel).forEach(el => {
   el.addEventListener("pointermove", e => {
     const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
     el.style.setProperty("--mx", x * 100 + "%"); el.style.setProperty("--my", y * 100 + "%");
-    gsap.to(el, { rotationY: (x - .5) * fuerza, rotationX: (.5 - y) * fuerza, transformPerspective: 1200, duration: .5, ease: "power2.out" });
+    gsap.to(el, { rotationY: (x - .5) * fuerza, rotationX: (.5 - y) * fuerza, transformPerspective: 1200, duration: .5, ease: "power2.out", overwrite: "auto" });
   });
   el.addEventListener("pointerleave", () => gsap.to(el, { rotationY: 0, rotationX: 0, duration: .8, ease: "elastic.out(1,.5)" }));
 });
