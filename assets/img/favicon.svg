@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Avispita de AvispaLabs: alas, cuerpo hexagonal con rayas y ojos -->
+  <ellipse cx="14" cy="16" rx="12" ry="8" fill="#FFF7DD" stroke="#17140F" stroke-width="2.5" transform="rotate(-25 14 16)"/>
+  <ellipse cx="50" cy="16" rx="12" ry="8" fill="#FFF7DD" stroke="#17140F" stroke-width="2.5" transform="rotate(25 50 16)"/>
+  <clipPath id="h"><path d="M32 6 L56 19 L56 47 L32 60 L8 47 L8 19 Z"/></clipPath>
+  <g clip-path="url(#h)">
+    <rect x="0" y="0" width="64" height="64" fill="#FFC400"/>
+    <rect x="0" y="33" width="64" height="7" fill="#17140F"/>
+    <rect x="0" y="46" width="64" height="7" fill="#17140F"/>
+  </g>
+  <path d="M32 6 L56 19 L56 47 L32 60 L8 47 L8 19 Z" fill="none" stroke="#17140F" stroke-width="2.5" stroke-linejoin="round"/>
+  <circle cx="24" cy="24" r="5" fill="#fff" stroke="#17140F" stroke-width="2"/>
+  <circle cx="40" cy="24" r="5" fill="#fff" stroke="#17140F" stroke-width="2"/>
+  <circle cx="25.5" cy="25" r="2.3" fill="#17140F"/>
+  <circle cx="41.5" cy="25" r="2.3" fill="#17140F"/>
+</svg>

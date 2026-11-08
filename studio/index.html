@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avispa Studio — Edición de video | AvispaLabs</title>
+<meta name="description" content="Avispa Studio: edición de videos verticales con subtítulos, motion graphics y ritmo. Desde $5 USD.">
+<meta name="theme-color" content="#0A0805">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<meta property="og:title" content="Avispa Studio — Edición de video | AvispaLabs">
+<meta property="og:description" content="Avispa Studio: edición de videos verticales con subtítulos, motion graphics y ritmo. Desde $5 USD.">
+<meta property="og:image" content="https://avispalabs.com/assets/img/icono-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/estilos.css">
+</head>
+<body data-pagina="studio">
+<canvas id="panal3d" aria-hidden="true"></canvas>
+<div id="velo"></div>
+<div id="oscurecer"></div>
+<div id="progreso"></div>
+<div id="transicion" aria-hidden="true"></div>
+
+<nav id="barra">
+  <a href="../" data-ir class="logo"><span class="hex"><i></i></span><span>Avispa<b>Labs</b></span></a>
+  <div class="links">
+    <a href="../" data-ir data-pagina="inicio">Inicio</a>
+    <a href="../flow/" data-ir data-pagina="flow">Avispa Flow</a>
+    <a href="../studio/" data-ir data-pagina="studio">Avispa Studio</a>
+  </div>
+  <a class="btn btn-oro" href="../contacto/?s=studio" data-ir>Hablemos</a>
+  <button id="btnMenu" aria-label="Abrir menú"><i></i></button>
+</nav>
+
+<main>
+  <header class="hero interna" id="inicio">
+    <div id="voladora"><div class="avispa"><div class="ala i"></div><div class="ala d"></div><div class="cuerpo"></div><div class="ojo i"></div><div class="ojo d"></div></div></div>
+    <div class="hero-in">
+    <div class="kicker"><span class="pulso"></span>Avispa Studio · Video y marketing</div>
+    <h1 class="partir">Del crudo al <span class="ital">brutal.</span></h1>
+    <div class="lema ital">Avispa Studio</div>
+    <p class="sub">Tú grabas con el celular, aunque te equivoques. Nosotros cortamos, ponemos ritmo, subtítulos, música y efectos.</p>
+    <div class="acciones">
+      <a class="btn btn-oro" href="#paquetes">Ver paquetes</a>
+      <a class="btn btn-borde" href="#muestras">▶ Ver muestras</a>
+    </div>
+    </div>
+  </header>
+
+  <section id="como" class="fondo-solido">
+    <div class="cont">
+      <div class="etiqueta">Así de fácil funciona</div>
+      <h2 class="partir">Tú grabas. Nosotros <span class="ital">picamos.</span></h2>
+      <p class="intro">No necesitas saber editar ni tener programas. Solo grabar.</p>
+      <div class="pasos-studio">
+        <div class="ps tilt-suave"><div class="ps-num">01</div><div class="ps-ico">📱</div><h4>Graba</h4><p>Con el celular, sin miedo. Aunque te equivoques o tartamudees, eso lo cortamos nosotros.</p></div>
+        <div class="ps tilt-suave"><div class="ps-num">02</div><div class="ps-ico">📤</div><h4>Mándalo</h4><p>Nos escribes, nos mandas tu video y escoges tu paquete. Pagas y arrancamos.</p></div>
+        <div class="ps tilt-suave"><div class="ps-num">03</div><div class="ps-ico">🚀</div><h4>Publica</h4><p>De 2 a 42 horas te llega tu video editado, en vertical y listo para subir.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="muestras" class="fondo-solido">
+    <div class="cont">
+      <div class="etiqueta">Antes y después</div>
+      <h2 class="partir">Mira la <span class="ital">diferencia.</span></h2>
+      <p class="intro">El mismo video, antes y después de pasar por la avispa. De 2 a 42 horas lo tienes listo para publicar.</p>
+      <div class="muestras">
+        <figure class="muestra"><video src="../assets/video/ejemplo-basico.mp4" poster="../assets/img/ejemplo-basico.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><b>Básico</b>Clip de podcast con subtítulos</figcaption></figure>
+        <figure class="muestra"><video src="../assets/video/ejemplo-pro.mp4" poster="../assets/img/ejemplo-pro.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><b>Pro</b>Producto con motion graphics</figcaption></figure>
+        <figure class="muestra"><video src="../assets/video/ejemplo-premium.mp4" poster="../assets/img/ejemplo-premium.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><b>Premium</b>Finca La Fe, café de origen</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="paquetes" class="fondo-solido">
+    <div class="cont">
+      <div class="etiqueta">Escoge tu picadura</div>
+      <h2 class="partir">Precios <span class="ital">claros.</span></h2>
+      <p class="intro">Precio por video. Todos incluyen rondas de cambios.</p>
+      <div class="paquetes">
+        <div class="paquete tilt-suave">
+          <h4>Básico</h4><div class="precio">$5 <small>USD / video</small></div><div class="para">Para empezar a publicar sin pena.</div>
+          <ul><li>Hasta 30 segundos</li><li>Cortes de silencios y errores</li><li>Subtítulos claros</li><li>Vertical 9:16</li><li>1 ronda de cambios</li><li>Entrega de 2 a 30 horas</li></ul>
+          <a class="btn btn-borde wa" data-msg="Hola Avispa Studio 🎬 Quiero el paquete Básico ($5 USD)." href="https://wa.me/573163490524">Quiero el Básico</a>
+        </div>
+        <div class="paquete top tilt-suave">
+          <span class="cinta">EL MÁS PEDIDO</span>
+          <h4>Pro</h4><div class="precio">$12 <small>USD / video</small></div><div class="para">Para que la gente no le dé "siguiente".</div>
+          <ul><li>Hasta 60 segundos</li><li>Subtítulos animados con palabras clave</li><li>Motion graphics básicos</li><li>Zooms, efectos de sonido y música</li><li>Gancho fuerte en 2 segundos</li><li>2 rondas de cambios</li></ul>
+          <a class="btn btn-oro wa" data-msg="Hola Avispa Studio 🎬 Quiero el paquete Pro ($12 USD)." href="https://wa.me/573163490524">Quiero el Pro</a>
+        </div>
+        <div class="paquete tilt-suave">
+          <h4>Premium</h4><div class="precio">$20 <small>USD / video</small></div><div class="para">Para marcas que quieren verse grandes.</div>
+          <ul><li>Hasta 90 segundos</li><li>Motion graphics avanzados y textos 3D</li><li>Transiciones y efectos de cámara</li><li>Color de cine</li><li>Voz en off con IA (opcional)</li><li>3 rondas de cambios</li></ul>
+          <a class="btn btn-borde wa" data-msg="Hola Avispa Studio 🎬 Quiero el paquete Premium ($20 USD)." href="https://wa.me/573163490524">Quiero el Premium</a>
+        </div>
+      </div>
+      <div class="mensual">
+        <span class="sello">PLANES MENSUALES</span>
+        <h3>Entre más videos, más barato cada uno</h3>
+        <p>Para negocios que publican seguido. Pagas una vez al mes y tu contenido nunca se queda quieto. Con 30 videos te regalamos videos extra.</p>
+        <div class="cantidades" role="group" aria-label="Videos al mes">
+          <button type="button" data-cant="6">6</button><button type="button" data-cant="12" class="activa">12</button><button type="button" data-cant="18">18</button><button type="button" data-cant="24">24</button><button type="button" data-cant="30">30 🎁</button>
+          <span class="nota">videos al mes</span>
+        </div>
+        <div class="mensuales">
+          <div class="mes" data-tipo="basico">
+            <h4>Básico mensual <span class="regalo" hidden></span></h4>
+            <div class="mes-precio"><span class="mes-total"></span> <small>USD/mes</small></div>
+            <div class="local"></div>
+            <p class="por-video"></p>
+            <p class="ahorro"></p>
+            <a href="https://wa.me/573163490524" class="btn btn-borde mes-wa" target="_blank" rel="noopener">Pedir por WhatsApp →</a>
+          </div>
+          <div class="mes destacado" data-tipo="pro">
+            <h4>Pro mensual <span class="regalo" hidden></span></h4>
+            <div class="mes-precio"><span class="mes-total"></span> <small>USD/mes</small></div>
+            <div class="local"></div>
+            <p class="por-video"></p>
+            <p class="ahorro"></p>
+            <a href="https://wa.me/573163490524" class="btn btn-oro mes-wa" target="_blank" rel="noopener">Pedir por WhatsApp →</a>
+          </div>
+          <div class="mes" data-tipo="premium">
+            <h4>Premium mensual <span class="regalo" hidden></span></h4>
+            <div class="mes-precio"><span class="mes-total"></span> <small>USD/mes</small></div>
+            <div class="local"></div>
+            <p class="por-video"></p>
+            <p class="ahorro"></p>
+            <a href="https://wa.me/573163490524" class="btn btn-borde mes-wa" target="_blank" rel="noopener">Pedir por WhatsApp →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="largos">
+        <div>
+          <span class="sello">VIDEOS LARGOS</span>
+          <h3>¿YouTube, podcast o gaming?</h3>
+          <p>Videos de 5, 20 minutos o más: episodios de podcast, gameplays, tutoriales o vlogs. Cada uno es distinto, así que el precio lo hablamos directo contigo.</p>
+          <div class="chips-l"><span>🎙️ Podcast</span><span>🎮 Gaming</span><span>▶️ YouTube</span><span>✂️ Clips del video largo</span></div>
+        </div>
+        <a class="btn btn-oro wa" data-msg="¡Hola Avispa Studio! 🎬 Tengo un video largo para editar.&#10;&#10;Tipo (podcast, gaming, YouTube…): &#10;Duración aproximada: &#10;¿Qué necesito?: " href="https://wa.me/573163490524">Cotizar por WhatsApp →</a>
+      </div>
+
+      <div class="calc">
+        <div>
+          <span class="sello">CALCULADORA</span>
+          <h3>Calcula cuánto te sale</h3>
+          <p class="nota">Con la tasa de cambio de hoy, en tu moneda.</p>
+        </div>
+        <div class="calc-campos">
+          <label>Paquete
+            <select id="calcPaquete"><option value="basico">Básico ($5)</option><option value="pro" selected>Pro ($12)</option><option value="premium">Premium ($20)</option></select>
+          </label>
+          <label>Videos
+            <input id="calcCantidad" type="number" min="1" max="50" value="1" inputmode="numeric">
+          </label>
+          <label>Moneda
+            <select id="calcMoneda"><option value="COP">Pesos colombianos (COP)</option><option value="MXN">Pesos mexicanos (MXN)</option><option value="PEN">Soles (PEN)</option><option value="CLP">Pesos chilenos (CLP)</option><option value="ARS">Pesos argentinos (ARS)</option><option value="EUR">Euros (EUR)</option><option value="USD">Dólares (USD)</option></select>
+          </label>
+        </div>
+        <div class="calc-total">
+          <div class="calc-usd" id="calcUsd">$12 USD</div>
+          <div class="calc-local" id="calcLocal"></div>
+          <div class="nota" id="calcTasa">Consultando la tasa de hoy…</div>
+          <div class="nota oro" id="calcTip" hidden></div>
+        </div>
+      </div>
+
+      <div class="siguiente"><a class="btn btn-borde" href="../flow/" data-ir>¿Y si tu WhatsApp vendiera solo? Mira Avispa Flow →</a></div>
+    </div>
+  </section>
+
+  <section id="contacto" class="cierre fondo-solido">
+    <div class="cont">
+      <div class="etiqueta" style="justify-content:center">El que no se avispa, no se viraliza</div>
+      <h2 class="partir">¿Editamos tu <span class="ital">próximo</span> video?</h2>
+      <p class="intro" style="margin-inline:auto">Cuéntanos qué necesita tu negocio. Te respondemos el mismo día.</p>
+      <div class="acciones">
+        <a class="btn btn-wa wa" data-msg="Hola Avispa Studio 🎬 Quiero editar mis videos." href="https://wa.me/573163490524">💬 Escribir por WhatsApp</a>
+        <a class="btn btn-borde" href="mailto:jhon@avispalabs.com">✉️ Escribir por correo</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a href="../" data-ir class="logo"><span class="hex"><i></i></span><span>Avispa<b>Labs</b></span></a>
+  <div>© <span class="anio"></span> AvispaLabs · <a href="../flow/" data-ir>Avispa Flow</a> · <a href="../studio/" data-ir>Avispa Studio</a></div>
+  <div class="legal-links"><a href="../legal/privacidad/" data-ir>Política de datos</a><a href="../legal/cookies/" data-ir>Cookies</a><a href="../legal/terminos/" data-ir>Términos</a></div>
+  <div class="redes"><a href="https://www.instagram.com/avispaedit" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@avispaedit" target="_blank" rel="noopener">TikTok</a></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
+<script src="../assets/js/comun.js"></script>
+<script type="module" src="../assets/js/panal3d.js"></script>
+</body>
+</html>

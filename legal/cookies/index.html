@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de cookies | AvispaLabs</title>
+<meta name="description" content="Cookies y almacenamiento de AvispaLabs.">
+<meta name="theme-color" content="#0A0805">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+<meta property="og:title" content="Política de cookies | AvispaLabs">
+<meta property="og:description" content="Cookies y almacenamiento de AvispaLabs.">
+<meta property="og:image" content="https://avispalabs.com/assets/img/icono-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/estilos.css">
+</head>
+<body data-pagina="legal">
+<canvas id="panal3d" aria-hidden="true"></canvas>
+<div id="velo"></div>
+<div id="oscurecer"></div>
+<div id="progreso"></div>
+<div id="transicion" aria-hidden="true"></div>
+
+<nav id="barra">
+  <a href="../../" data-ir class="logo"><span class="hex"><i></i></span><span>Avispa<b>Labs</b></span></a>
+  <div class="links">
+    <a href="../../" data-ir data-pagina="inicio">Inicio</a>
+    <a href="../../flow/" data-ir data-pagina="flow">Avispa Flow</a>
+    <a href="../../studio/" data-ir data-pagina="studio">Avispa Studio</a>
+  </div>
+  <a class="btn btn-oro" href="../../contacto/" data-ir>Hablemos</a>
+  <button id="btnMenu" aria-label="Abrir menú"><i></i></button>
+</nav>
+
+<main>
+  <header class="hero interna corta legal-hero" id="inicio">
+    <div class="hero-in">
+    <div class="kicker"><span class="pulso"></span>Cookies y almacenamiento</div>
+    <h1 class="partir">Política de <span class="ital">cookies</span></h1>
+    </div>
+  </header>
+  <section class="fondo-solido"><article class="legal cont">
+<p class="lead">Esta página explica qué son las cookies y qué usa realmente avispalabs.com.</p>
+
+<h2>1. ¿Qué son las cookies?</h2>
+<p>Son pequeños archivos que algunos sitios guardan en tu navegador para recordar cosas, medir visitas o mostrar publicidad.</p>
+
+<h2>2. ¿Qué usa esta web?</h2>
+<ul>
+  <li><b>No usamos cookies de publicidad ni de seguimiento.</b> No hay Google Analytics, píxel de Facebook ni nada parecido.</li>
+  <li>Usamos un <b>almacenamiento técnico temporal</b> del navegador (sessionStorage) solo para que funcione la animación de panal al cambiar de página. Se borra al cerrar la pestaña y no te identifica.</li>
+  <li>Para cargar letras y animaciones usamos servicios externos (Google Fonts, cdnjs, jsDelivr y unpkg). Como en cualquier sitio, esos servicios pueden registrar datos técnicos como tu IP para entregar los archivos. Puedes ver sus propias políticas en sus páginas.</li>
+  <li>Guardamos en tu navegador (localStorage) que ya aceptaste el aviso de privacidad, para no mostrártelo cada vez. No te identifica.</li>
+  <li>La calculadora de precios de Avispa Studio consulta la tasa de cambio del día en open.er-api.com; esa consulta no envía datos tuyos aparte de los técnicos de cualquier conexión.</li>
+  <li>Al tocar los botones de WhatsApp o correo sales de nuestra web: ahí aplican las políticas de WhatsApp (Meta) o de tu proveedor de correo.</li>
+</ul>
+
+<h2>3. ¿Cómo controlarlas?</h2>
+<p>Puedes borrar o bloquear cookies y el almacenamiento del sitio desde la configuración de tu navegador. La web seguirá funcionando; solo puede verse sin la animación de transición.</p>
+
+<h2>4. Si esto cambia</h2>
+<p>Si algún día agregamos herramientas de medición o publicidad, te pediremos permiso con un aviso antes de activarlas y actualizaremos esta página.</p>
+<p>Vigente desde el <b>7 de noviembre de 2026</b>. Dudas: <a href="mailto:jhon@avispalabs.com">jhon@avispalabs.com</a>.</p></article></section>
+</main>
+
+<footer>
+  <a href="../../" data-ir class="logo"><span class="hex"><i></i></span><span>Avispa<b>Labs</b></span></a>
+  <div>© <span class="anio"></span> AvispaLabs · <a href="../../flow/" data-ir>Avispa Flow</a> · <a href="../../studio/" data-ir>Avispa Studio</a></div>
+  <div class="legal-links"><a href="../../legal/privacidad/" data-ir>Política de datos</a><a href="../../legal/cookies/" data-ir>Cookies</a><a href="../../legal/terminos/" data-ir>Términos</a></div>
+  <div class="redes"><a href="https://www.instagram.com/avispaedit" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@avispaedit" target="_blank" rel="noopener">TikTok</a></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
+<script src="../../assets/js/comun.js"></script>
+<script type="module" src="../../assets/js/panal3d.js"></script>
+</body>
+</html>

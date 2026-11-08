@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avispa Flow — Asistentes de WhatsApp con IA | AvispaLabs</title>
+<meta name="description" content="Avispa Flow: asistentes de WhatsApp con IA que atienden, venden y organizan tu negocio 24/7.">
+<meta name="theme-color" content="#0A0805">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<meta property="og:title" content="Avispa Flow — Asistentes de WhatsApp con IA | AvispaLabs">
+<meta property="og:description" content="Avispa Flow: asistentes de WhatsApp con IA que atienden, venden y organizan tu negocio 24/7.">
+<meta property="og:image" content="https://avispalabs.com/assets/img/icono-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/estilos.css">
+</head>
+<body data-pagina="flow">
+<canvas id="panal3d" aria-hidden="true"></canvas>
+<div id="velo"></div>
+<div id="oscurecer"></div>
+<div id="progreso"></div>
+<div id="transicion" aria-hidden="true"></div>
+
+<nav id="barra">
+  <a href="../" data-ir class="logo"><span class="hex"><i></i></span><span>Avispa<b>Labs</b></span></a>
+  <div class="links">
+    <a href="../" data-ir data-pagina="inicio">Inicio</a>
+    <a href="../flow/" data-ir data-pagina="flow">Avispa Flow</a>
+    <a href="../studio/" data-ir data-pagina="studio">Avispa Studio</a>
+  </div>
+  <a class="btn btn-oro" href="../contacto/?s=flow" data-ir>Hablemos</a>
+  <button id="btnMenu" aria-label="Abrir menú"><i></i></button>
+</nav>
+
+<main>
+  <header class="hero interna" id="inicio">
+    <div id="voladora"><div class="avispa"><div class="ala i"></div><div class="ala d"></div><div class="cuerpo"></div><div class="ojo i"></div><div class="ojo d"></div></div></div>
+    <div class="hero-in">
+    <div class="kicker"><span class="pulso"></span>Avispa Flow · IA y automatización</div>
+    <h1 class="partir">Una obrera que <span class="ital">nunca</span> duerme.</h1>
+    <div class="lema ital">Avispa Flow</div>
+    <p class="sub">Asistentes de WhatsApp con inteligencia artificial que atienden, venden y organizan tu negocio las 24 horas.</p>
+    <div class="acciones">
+      <a class="btn btn-oro wa" data-msg="Hola Avispa Flow 🐝 Quiero una Obrera (asistente de WhatsApp con IA) para mi negocio." href="https://wa.me/573163490524">Quiero una para mi negocio</a>
+      <a class="btn btn-borde" href="#demo">▶ Ver la demo</a>
+    </div>
+    </div>
+  </header>
+
+  <section id="demo" class="fondo-solido">
+    <div class="cont flow-top">
+      <div>
+        <div class="etiqueta">Conoce a Obrera</div>
+        <h2 class="partir">Tu mejor <span class="ital">empleada</span> vive en WhatsApp.</h2>
+        <p class="intro"><b class="oro">Obrera</b> contesta precios, revisa inventario, entiende audios, verifica pagos y le avisa a una persona cuando hace falta. Todo queda en tu panel.</p>
+        <div class="datos">
+          <div class="dato"><b data-contar="24" data-sufijo="/7">0</b><span>Atención sin pausa</span></div>
+          <div class="dato"><b data-contar="8">0</b><span>Tareas automáticas</span></div>
+          <div class="dato"><b data-contar="3" data-prefijo="&lt;" data-sufijo="s">0</b><span>Para responder</span></div>
+        </div>
+      </div>
+      <div class="tel" id="telObrera">
+        <video id="vidObrera" src="../assets/video/obrera-demo.mp4" poster="../assets/img/obrera-demo.jpg" muted loop playsinline preload="metadata"></video>
+        <button class="sonido" id="btnSonido">🔊 Activar sonido</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="carril-wrap fondo-solido" id="carrilWrap">
+    <div class="carril-cab">
+      <div>
+        <div class="etiqueta">Las avispitas trabajadoras</div>
+        <h2 class="partir">Así trabaja tu <span class="ital">enjambre.</span></h2>
+        <p class="pista">Desliza hacia el lado 👉</p>
+      </div>
+      <div class="flechas">
+        <button class="flecha" id="carrilAnt" aria-label="Paso anterior">←</button>
+        <button class="flecha" id="carrilSig" aria-label="Paso siguiente">→</button>
+      </div>
+    </div>
+    <div class="carril" id="carril"></div>
+    <div class="riel"><i id="rielProg"></i></div>
+  </section>
+
+  <section id="paquetes" class="fondo-solido">
+    <div class="cont">
+      <div class="etiqueta">Paquetes Avispa Flow</div>
+      <h2 class="partir">Escoge tu <span class="ital">avispa.</span></h2>
+      <p class="intro">Cada paquete es una avispa con un oficio. Hoy arrancamos con la Obrera, y el resto del enjambre viene en camino.</p>
+      <div class="paq-flow">
+        <div class="pf disponible tilt-suave">
+          <span class="estado si">● Disponible</span>
+          <div class="pf-ico">🐝</div>
+          <h4>Obrera</h4>
+          <div class="pf-tipo">Asistente de WhatsApp 24/7</div>
+          <p>Atiende a tus clientes por WhatsApp de día y de noche: responde precios, consulta inventario, entiende audios, verifica pagos y le avisa a un asesor cuando hace falta.</p>
+          <a class="btn btn-oro wa" data-msg="Hola Avispa Flow 🐝 Quiero cotizar el paquete Obrera." href="https://wa.me/573163490524">Cotizar la Obrera</a>
+          <small class="pf-mant">🔧 Incluye mantenimiento mensual · valor según cotización</small>
+        </div>
+        <div class="pf pronto">
+          <span class="estado">🔒 Próximamente</span>
+          <div class="pf-ico">🎯</div>
+          <h4>Cazadora</h4>
+          <div class="pf-tipo">Captación y seguimiento</div>
+          <p>Persigue a los interesados: les escribe de vuelta, recuerda a quien no respondió y no deja que se te escape una venta.</p>
+        </div>
+        <div class="pf pronto">
+          <span class="estado">🔒 Próximamente</span>
+          <div class="pf-ico">🏺</div>
+          <h4>Alfarera</h4>
+          <div class="pf-tipo">Automatización a la medida</div>
+          <p>Moldeamos las tareas repetitivas de tu negocio: reportes, facturas, hojas de cálculo y procesos que hoy haces a mano.</p>
+        </div>
+        <div class="pf pronto">
+          <span class="estado">🔒 Próximamente</span>
+          <div class="pf-ico">🏢</div>
+          <h4>Avispón</h4>
+          <div class="pf-tipo">Varias sedes y panel central</div>
+          <p>Para negocios con varias sedes o números: todo conectado a tus sistemas y un solo panel para controlarlo.</p>
+        </div>
+        <div class="pf pronto">
+          <span class="estado">🔒 Próximamente</span>
+          <div class="pf-ico">👑</div>
+          <h4>Reina</h4>
+          <div class="pf-tipo">Todo incluido, pago mensual</div>
+          <p>El enjambre completo trabajando para ti, con soporte y mejoras cada mes, por una sola cuota.</p>
+        </div>
+      </div>
+      <div class="mantenimiento">
+        <div class="mt-ico">🔧</div>
+        <div>
+          <h4>Mantenimiento mensual</h4>
+          <p>Todos los paquetes de automatización llevan un <b>mantenimiento mensual</b>: mantenemos tu asistente funcionando, lo ajustamos cuando cambian tus precios o productos, lo mejoramos y te damos soporte. El valor de la implementación y del mantenimiento depende de tu negocio y se define en la <b>cotización</b>.</p>
+        </div>
+        <a class="btn btn-borde wa" data-msg="Hola Avispa Flow 🐝 Quiero una cotización (implementación + mantenimiento mensual)." href="https://wa.me/573163490524">Pedir cotización</a>
+      </div>
+      <p class="pf-nota">¿Quieres ser de los primeros en probar los nuevos paquetes? <a class="wa oro" data-msg="Hola Avispa Flow 🐝 Avísenme cuando salgan los nuevos paquetes." href="https://wa.me/573163490524">Avísame cuando salgan →</a></p>
+    </div>
+  </section>
+
+  <section id="servicios" class="fondo-solido">
+    <div class="cont">
+      <div class="etiqueta">Lo que podemos automatizar</div>
+      <h2 class="partir">Menos chats, más <span class="ital">ventas.</span></h2>
+      <div class="beneficios">
+        <div class="beneficio tilt-suave"><div class="ico">💬</div><h4>Atención por WhatsApp</h4><p>Responde preguntas, precios y horarios al instante, con el tono de tu negocio.</p></div>
+        <div class="beneficio tilt-suave"><div class="ico">🧾</div><h4>Pagos y pedidos</h4><p>Recibe comprobantes, arma pedidos y te los deja listos para aprobar.</p></div>
+        <div class="beneficio tilt-suave"><div class="ico">📊</div><h4>Panel de control</h4><p>Ves pagos, casos e inventario en un solo lugar, desde el celular.</p></div>
+      </div>
+      <div class="siguiente"><a class="btn btn-borde" href="../studio/" data-ir>¿También necesitas videos? Mira Avispa Studio →</a></div>
+    </div>
+  </section>
+
+  <section id="contacto" class="cierre fondo-solido">
+    <div class="cont">
+      <div class="etiqueta" style="justify-content:center">Haz que tu negocio se avispe</div>
+      <h2 class="partir">¿Lo <span class="ital">automatizamos?</span></h2>
+      <p class="intro" style="margin-inline:auto">Cuéntanos qué necesita tu negocio. Te respondemos el mismo día.</p>
+      <div class="acciones">
+        <a class="btn btn-wa wa" data-msg="Hola Avispa Flow 🐝 Quiero una Obrera para mi negocio." href="https://wa.me/573163490524">💬 Escribir por WhatsApp</a>
+        <a class="btn btn-borde" href="mailto:jhon@avispalabs.com">✉️ Escribir por correo</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a href="../" data-ir class="logo"><span class="hex"><i></i></span><span>Avispa<b>Labs</b></span></a>
+  <div>© <span class="anio"></span> AvispaLabs · <a href="../flow/" data-ir>Avispa Flow</a> · <a href="../studio/" data-ir>Avispa Studio</a></div>
+  <div class="legal-links"><a href="../legal/privacidad/" data-ir>Política de datos</a><a href="../legal/cookies/" data-ir>Cookies</a><a href="../legal/terminos/" data-ir>Términos</a></div>
+  <div class="redes"><a href="https://www.instagram.com/avispaedit" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@avispaedit" target="_blank" rel="noopener">TikTok</a></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
+<script src="../assets/js/comun.js"></script>
+<script type="module" src="../assets/js/panal3d.js"></script>
+</body>
+</html>
