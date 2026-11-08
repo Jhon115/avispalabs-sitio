@@ -142,7 +142,11 @@ const iraA = url => {
   animarT(400, false, p => { if (p > .6) capa.classList.add("logo"); }, ir);
   setTimeout(ir, 900); // respaldo si el navegador pausa las animaciones (pestaña en segundo plano)
 };
+const irAlAncla = () => {
+  if (location.hash.length > 1 && $(location.hash) && window.lenis) { ScrollTrigger.refresh(); lenis.scrollTo(location.hash, { immediate: true, offset: -60 }); }
+};
 const destapar = () => {
+  irAlAncla();
   prepararT();
   dibujarT(0, true);
   capa.classList.add("abriendo");
@@ -152,6 +156,7 @@ const destapar = () => {
     raizDoc.classList.remove("trans");
     capa.classList.remove("abriendo");
     ctxT.clearRect(0, 0, anchoT, altoT);
+    if (location.hash.length > 1 && $(location.hash) && Math.abs($(location.hash).getBoundingClientRect().top - 60) > 120) irAlAncla();
   }), 110);
 };
 if (capa && entrando) {
@@ -197,6 +202,7 @@ $$(".idiomas a").forEach(a => {
 // ---------- movimiento ----------
 gsap.registerPlugin(ScrollTrigger);
 const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+window.lenis = lenis;
 lenis.on("scroll", ScrollTrigger.update);
 gsap.ticker.add(t => lenis.raf(t * 1000));
 gsap.ticker.lagSmoothing(0);
@@ -382,7 +388,7 @@ if ($(".proceso")) {
 // cierre
 if ($("#contacto")) gsap.from("#contacto .btn", { y: 30, opacity: 0, scale: .9, duration: .7, ease: "back.out(2)", stagger: .1,
   scrollTrigger: { trigger: "#contacto .acciones", start: "top 92%" } });
-addEventListener("load", () => ScrollTrigger.refresh());
+addEventListener("load", () => { ScrollTrigger.refresh(); irAlAncla(); });
 
 // ---------- formulario de contacto: arma el mensaje y lo manda por WhatsApp o correo ----------
 const form = $("#formContacto");
@@ -603,5 +609,104 @@ if (!REDUCIR) {
         gsap.fromTo(hex, { y: d, rotation: -12 }, { y: -d, rotation: 14 + (k % 4) * 8, ease: "none", scrollTrigger: { trigger: sec, start: "top bottom", end: "bottom top", scrub: true } });
       }
     });
+  }
+}
+
+// ---------- Vera: chat guiado con botones (no usa IA ni guarda datos) ----------
+{
+  const boton = $("#aviAyuda");
+  if (boton) {
+    const raiz = $("#barra .logo").getAttribute("href");
+    const wa = t => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t)}`;
+    const hola = L("Hola AvispaLabs 🐝 ", "Hi AvispaLabs 🐝 ");
+    // Recomendación: nombre, por qué sirve, a dónde lleva y si ya está disponible
+    const P = {
+      obrera: { n: "Obrera", si: true, pag: "flow", t: L("Te sirve <b>Obrera</b>, nuestro asistente inteligente de WhatsApp 24/7. Responde más rápido y evita perder clientes por mensajes sin contestar.", "<b>Obrera</b> is right for you, our smart 24/7 WhatsApp assistant. Reply faster and stop losing customers to unanswered messages.") },
+      exploradora: { n: "Exploradora", pag: "flow", t: L("Te sirve <b>Exploradora</b>: atrae nuevos clientes con una página web con asistente IA y formularios inteligentes.", "<b>Exploradora</b> is right for you: attract new customers with an AI-assisted website and smart forms.") },
+      cazadora: { n: "Cazadora", pag: "flow", t: L("Te sirve <b>Cazadora</b>: convierte conversaciones perdidas en nuevas oportunidades de venta con seguimiento automático.", "<b>Cazadora</b> is right for you: turn lost conversations into new sales opportunities with automatic follow-up.") },
+      alfarera: { n: "Alfarera", pag: "flow", t: L("Te sirve <b>Alfarera</b>: elimina horas de trabajo manual automatizando reportes, documentos y procesos repetitivos.", "<b>Alfarera</b> is right for you: eliminate hours of manual work by automating reports, documents and repetitive processes.") },
+      avispon: { n: "Avispón", pag: "flow", t: L("Te sirve <b>Avispón</b>: conecta varias sedes y controla toda tu operación desde un solo lugar.", "<b>Avispón</b> is right for you: connect multiple locations and control your whole operation from one place.") },
+      enjambre: { n: L("Enjambre Empresarial", "Enterprise Swarm"), si: true, pag: "flow", txtBoton: L("💬 Solicitar diagnóstico", "💬 Request a diagnosis"), t: L("Te sirve <b>Enjambre Empresarial</b>: una solución propia, hecha a la medida de la operación de tu empresa.", "<b>Enterprise Swarm</b> is right for you: a solution of your own, tailored to how your company operates.") },
+      basico: { n: L("el paquete Básico", "the Basic package"), si: true, pag: "studio", t: L("Te sirve el paquete <b>Básico ($5 USD)</b>: hasta 30 segundos, cortes de silencios y errores y subtítulos claros.", "The <b>Basic package ($5 USD)</b> is right for you: up to 30 seconds, silence and mistake cuts, and clear captions.") },
+      pro: { n: L("el paquete Pro", "the Pro package"), si: true, pag: "studio", t: L("Te sirve el paquete <b>Pro ($12 USD)</b>: hasta 60 segundos, subtítulos animados, motion graphics, efectos y música.", "The <b>Pro package ($12 USD)</b> is right for you: up to 60 seconds, animated captions, motion graphics, effects and music.") },
+      premium: { n: L("el paquete Premium", "the Premium package"), si: true, pag: "studio", t: L("Te sirve el paquete <b>Premium ($20 USD)</b>: hasta 90 segundos, textos 3D, efectos de cámara y color de cine.", "The <b>Premium package ($20 USD)</b> is right for you: up to 90 seconds, 3D text, camera effects and cinema color grading.") },
+      planes: { n: L("un plan mensual", "a monthly plan"), si: true, pag: "studio", t: L("Te sirve un <b>plan mensual</b>: entre más videos, más barato cada uno, y tu contenido nunca se queda quieto.", "A <b>monthly plan</b> is right for you: the more videos, the cheaper each one, and your content never stands still.") },
+      largos: { n: L("edición de videos largos", "long-form video editing"), si: true, pag: "studio", txtBoton: L("💬 Cotizar por WhatsApp", "💬 Get a quote on WhatsApp"), t: L("Editamos <b>videos largos</b>: podcast, gaming, YouTube o clips del video largo. Cada uno es distinto, así que el precio lo hablamos directo contigo.", "We edit <b>long videos</b>: podcasts, gaming, YouTube or clips from the long video. Each one is different, so we'll talk price directly with you.") },
+    };
+    // Preguntas: cada opción lleva a otra pregunta o a una recomendación (r)
+    const Q = {
+      inicio: { t: L("¡Hola! Soy Vera, de AvispaLabs 🐝 ¿Qué necesitas para tu negocio?", "Hi! I'm Vera from AvispaLabs 🐝 What does your business need?"), o: [[L("Automatizar", "Automate"), "auto"], [L("Videos", "Videos"), "videos"], [L("No estoy seguro", "I'm not sure"), "duda"], [L("Hablar con una persona", "Talk to a person"), "humano"]] },
+      auto: { t: L("¡Listo! ¿Qué le quita más tiempo a tu equipo?", "Great! What takes up most of your team's time?"), o: [[L("Responder WhatsApp", "Answering WhatsApp"), { r: "obrera" }], [L("Conseguir clientes", "Getting customers"), { r: "exploradora" }], [L("Recuperar ventas", "Winning back sales"), { r: "cazadora" }], [L("Tareas internas", "Internal tasks"), { r: "alfarera" }], [L("Varias sedes", "Multiple locations"), { r: "avispon" }], [L("Algo a la medida", "Something custom"), { r: "enjambre" }]] },
+      videos: { t: L("¡De una! ¿Cada cuánto publicas?", "Sure! How often do you post?"), o: [[L("Un video", "Just one video"), "video1"], [L("Cada semana", "Every week"), { r: "planes" }], [L("Videos largos", "Long videos"), { r: "largos" }]] },
+      video1: { t: L("¿Cómo lo quieres?", "How do you want it?"), o: [[L("Sencillo, con subtítulos", "Simple, with captions"), { r: "basico" }], [L("Con animaciones y música", "With animation and music"), { r: "pro" }], [L("Nivel marca, tipo cine", "Brand level, cinema style"), { r: "premium" }]] },
+      duda: { t: L("Tranquilo, te ayudo. ¿Qué te gustaría mejorar primero?", "No problem, I'll help. What would you like to improve first?"), o: [[L("Atender mejor a mis clientes", "Serve my customers better"), { r: "obrera" }], [L("Vender más", "Sell more"), "vender"], [L("Ahorrar tiempo", "Save time"), { r: "alfarera" }], [L("Que me conozcan más", "Get known"), "videos"]] },
+      vender: { t: L("¿Ya te escribe gente interesada?", "Are interested people already contacting you?"), o: [[L("Sí, pero no compran", "Yes, but they don't buy"), { r: "cazadora" }], [L("Casi no me escriben", "Hardly anyone contacts me"), { r: "exploradora" }]] },
+    };
+
+    const panel = document.createElement("div");
+    panel.className = "vera"; panel.id = "vera";
+    panel.setAttribute("role", "dialog"); panel.setAttribute("aria-label", "Vera"); panel.setAttribute("data-lenis-prevent", ""); panel.hidden = true;
+    panel.innerHTML = `<div class="v-cab"><span class="avi-base">${avispaHTML}</span><div class="v-nom"><b>Vera</b><span><i></i>${L("Asistente de AvispaLabs", "AvispaLabs assistant")}</span></div><button type="button" class="v-cerrar" aria-label="${L("Cerrar", "Close")}">×</button></div><div class="v-cuerpo" aria-live="polite"></div><div class="v-pie">${L("Vera te orienta con opciones. No guarda tus datos.", "Vera guides you with options. She doesn't store your data.")}</div>`;
+    document.body.appendChild(panel);
+    const cuerpo = $(".v-cuerpo", panel);
+    let abierto = false, iniciado = false, turno = 0;
+    const alFinal = () => { cuerpo.scrollTop = cuerpo.scrollHeight; };
+    const burbuja = (html, quien) => { const d = document.createElement("div"); d.className = "v-msg " + quien; d.innerHTML = html; cuerpo.appendChild(d); alFinal(); return d; };
+    const quitarOpciones = () => $$(".v-ops", cuerpo).forEach(e => e.remove());
+    const opciones = hijos => { const c = document.createElement("div"); c.className = "v-ops"; hijos.forEach(h => c.appendChild(h)); cuerpo.appendChild(c); alFinal(); };
+    const botonOp = (txt, fn, clase = "") => { const b = document.createElement("button"); b.type = "button"; b.className = "v-op " + clase; b.textContent = txt; b.addEventListener("click", fn); return b; };
+    const enlaceWa = (txt, msg) => { const a = document.createElement("a"); a.className = "v-op v-wa"; a.href = wa(msg); a.target = "_blank"; a.rel = "noopener"; a.textContent = txt; return a; };
+    // Vera "escribe" un momento antes de contestar
+    const dice = (html, luego) => {
+      const mio = ++turno;
+      const pts = burbuja("<span class='v-pts'><i></i><i></i><i></i></span>", "bot");
+      setTimeout(() => { if (mio !== turno) return; pts.innerHTML = html; alFinal(); luego && luego(); }, REDUCIR ? 0 : 650);
+    };
+    const reiniciar = () => { quitarOpciones(); burbuja(L("Volver a empezar", "Start over"), "yo"); pregunta("inicio"); };
+    const irAPaquetes = pag => {
+      cerrar();
+      if (pagina === pag) { lenis.scrollTo("#paquetes", { offset: -60 }); return; }
+      iraA(raiz + pag + "/#paquetes");
+    };
+    const pregunta = id => {
+      const q = Q[id];
+      dice(q.t, () => opciones(q.o.map(([txt, sig]) => botonOp(txt, () => {
+        quitarOpciones(); burbuja(txt, "yo");
+        if (sig === "humano") return humano();
+        sig.r ? recomendar(sig.r) : pregunta(sig);
+      }))));
+    };
+    const humano = () => dice(L("¡Claro! Escríbenos por WhatsApp o déjanos tu solicitud, y te responde una persona del equipo.", "Of course! Message us on WhatsApp or send your request, and a person from the team will reply."), () => {
+      opciones([enlaceWa(L("💬 Escribir por WhatsApp", "💬 Message us on WhatsApp"), hola + L("Quiero hablar con una persona.", "I'd like to talk to a person.")),
+        botonOp(L("Ir al formulario", "Go to the form"), () => { cerrar(); iraA(raiz + "contacto/"); }),
+        botonOp(L("Volver a empezar", "Start over"), reiniciar, "v-sec")]);
+    });
+    const recomendar = id => {
+      const p = P[id];
+      const texto = p.si ? p.t : p.t + " " + L("Este paquete viene en camino. Si te interesa, te aviso apenas salga.", "This package is on its way. If you're interested, I'll let you know as soon as it launches.");
+      dice(texto, () => {
+        const msg = hola + (p.si ? L(`Me interesa ${p.n}.`, `I'm interested in ${p.n}.`) : L(`Avísenme cuando salga ${p.n}.`, `Let me know when ${p.n} launches.`));
+        opciones([enlaceWa(p.si ? (p.txtBoton || L("💬 Escribir por WhatsApp", "💬 Message us on WhatsApp")) : L("💬 Avísame por WhatsApp", "💬 Notify me on WhatsApp"), msg),
+          botonOp(L("Ver paquete", "See package"), () => irAPaquetes(p.pag)),
+          botonOp(L("Volver a empezar", "Start over"), reiniciar, "v-sec")]);
+      });
+    };
+    const abrir = () => {
+      abierto = true; panel.hidden = false; boton.classList.add("abierto"); boton.classList.remove("globo"); boton.setAttribute("aria-expanded", "true");
+      document.body.classList.add("vera-abierta");
+      if (innerWidth < 620) lenis.stop();
+      if (!REDUCIR) gsap.fromTo(panel, { y: 24, scale: .94, opacity: 0, transformOrigin: "100% 100%" }, { y: 0, scale: 1, opacity: 1, duration: .32, ease: "back.out(1.6)" });
+      if (!iniciado) { iniciado = true; pregunta("inicio"); }
+      $(".v-cerrar", panel).focus({ preventScroll: true });
+    };
+    function cerrar() {
+      if (!abierto) return;
+      abierto = false; panel.hidden = true; boton.classList.remove("abierto"); boton.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("vera-abierta"); lenis.start(); boton.focus({ preventScroll: true });
+    }
+    boton.setAttribute("aria-expanded", "false"); boton.setAttribute("aria-controls", "vera");
+    boton.addEventListener("click", () => abierto ? cerrar() : abrir());
+    $(".v-cerrar", panel).addEventListener("click", cerrar);
+    addEventListener("keydown", e => { if (e.key === "Escape") cerrar(); });
   }
 }

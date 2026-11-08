@@ -600,3 +600,41 @@ nav.solida { background: rgba(10,8,5,.93); }
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 115'%3E%3Cpolygon points='50,2 98,29 98,86 50,113 2,86 2,29' fill='%23FFC400' fill-opacity='.03' stroke='%23FFC400' stroke-opacity='.4' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat; }
 .hex-flota.lleno { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 115'%3E%3Cpolygon points='50,2 98,29 98,86 50,113 2,86 2,29' fill='%23FFC400' fill-opacity='.16'/%3E%3C/svg%3E"); }
 section > :not(.hex-flota) { position: relative; z-index: 1; }
+
+/* ---------- Vera: chat guiado ---------- */
+button.avi-ayuda { background: none; border: 0; padding: 0; font: inherit; }
+.ya-bajo .avi-ayuda.abierto, .avi-ayuda.abierto { opacity: 0; pointer-events: none; }
+.vera { position: fixed; right: clamp(14px, 2.4vw, 28px); bottom: calc(clamp(14px, 2.4vw, 26px) + env(safe-area-inset-bottom)); z-index: 55; width: min(380px, calc(100vw - 24px)); height: min(560px, calc(100svh - 110px));
+  display: flex; flex-direction: column; border-radius: 22px; overflow: hidden; background: #100C07; border: 1px solid rgba(255,196,0,.45);
+  box-shadow: 0 24px 70px rgba(0,0,0,.75), 0 0 50px rgba(255,196,0,.12); }
+.vera[hidden] { display: none; }
+.v-cab { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: linear-gradient(120deg, #2A2010, #120E08); border-bottom: 1px solid var(--linea); }
+.v-cab .avi-base { width: 46px; height: 52px; }
+.v-cab .avi-base .avispa { transform: scale(.44); }
+.v-nom { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.v-nom b { font-size: 17px; font-weight: 900; color: var(--crema); }
+.v-nom span { font-size: 12px; font-weight: 600; color: var(--gris); display: flex; align-items: center; gap: 6px; }
+.v-nom i { width: 7px; height: 7px; border-radius: 50%; background: #25D366; }
+.v-cerrar { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--linea); background: rgba(10,8,5,.6); color: var(--crema); font-size: 22px; line-height: 1; }
+.v-cerrar:hover { border-color: var(--oro); color: var(--oro); }
+.v-cuerpo { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 16px 14px; display: flex; flex-direction: column; gap: 10px; scrollbar-width: thin; scrollbar-color: rgba(255,196,0,.35) transparent; }
+.v-msg { max-width: 86%; padding: 11px 14px; font-size: 14.5px; line-height: 1.5; border-radius: 16px; animation: vEntra .25s ease-out both; }
+@keyframes vEntra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.v-msg.bot { align-self: flex-start; background: #221A0D; color: var(--crema); border: 1px solid var(--linea); border-bottom-left-radius: 4px; }
+.v-msg.bot b { color: var(--oro); }
+.v-msg.yo { align-self: flex-end; background: var(--oro); color: var(--negro); font-weight: 700; border-bottom-right-radius: 4px; }
+.v-pts { display: inline-flex; gap: 4px; padding: 4px 2px; }
+.v-pts i { width: 7px; height: 7px; border-radius: 50%; background: var(--oro); animation: vPunto 1s infinite ease-in-out; }
+.v-pts i:nth-child(2) { animation-delay: .15s; } .v-pts i:nth-child(3) { animation-delay: .3s; }
+@keyframes vPunto { 0%, 60%, 100% { opacity: .3; transform: none; } 30% { opacity: 1; transform: translateY(-3px); } }
+.v-ops { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; animation: vEntra .25s ease-out both; }
+.v-op { font: 700 13.5px Montserrat, sans-serif; color: var(--crema); padding: 10px 14px; border-radius: 999px; background: rgba(10,8,5,.7); border: 1.5px solid rgba(255,196,0,.45); transition: background .2s, color .2s, transform .2s; text-align: left; }
+.v-op:hover { background: var(--oro); color: var(--negro); transform: translateY(-1px); }
+.v-op.v-wa { background: var(--verde); color: #04210F; border-color: var(--verde); }
+.v-op.v-wa:hover { background: #3BE27A; color: #04210F; }
+.v-op.v-sec { border-color: rgba(251,245,234,.2); color: var(--gris); }
+.v-pie { padding: 8px 14px; text-align: center; font-size: 11px; font-weight: 600; color: var(--gris); border-top: 1px solid var(--linea); }
+@media (max-width: 620px) {
+  .vera { left: 10px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom)); width: auto; height: min(78svh, 620px); }
+  .v-op { font-size: 14.5px; padding: 11px 15px; }
+}
