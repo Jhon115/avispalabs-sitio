@@ -213,6 +213,7 @@ $$("nav .links a").forEach(a => a.addEventListener("click", () => document.body.
 ScrollTrigger.create({ start: 0, end: "max", onUpdate: s => {
   gsap.set("#progreso", { scaleX: s.progress });
   $("#barra").classList.toggle("solida", s.scroll() > 40);
+  document.body.classList.toggle("ya-bajo", s.scroll() > 320);
   window.__scroll.v = s.getVelocity();
 }});
 
@@ -529,11 +530,78 @@ if ($("#calcPaquete")) {
         <a class="btn btn-borde" href="${urlDatos}">${L("Leer más", "Read more")}</a>
       </div>`;
     document.body.appendChild(aviso);
+    document.body.classList.add("con-aviso");
     gsap.fromTo(aviso, { y: 140, opacity: 0, rotationX: -30, transformPerspective: 900 },
       { y: 0, opacity: 1, rotationX: 0, duration: .9, ease: "expo.out", delay: 1.6 });
     $("#acAceptar").addEventListener("click", () => {
       try { localStorage.setItem(CLAVE, "si"); } catch (e) {}
+      document.body.classList.remove("con-aviso");
       gsap.to(aviso, { y: 120, opacity: 0, duration: .45, ease: "power3.in", onComplete: () => aviso.remove() });
+    });
+  }
+}
+
+// ---------- superposiciones: avispita guía, avispita de ayuda y hexágonos flotantes ----------
+if (!REDUCIR) {
+  const chico = innerWidth < 760;
+  // Avispita guía: se posa en cada título y vuela al siguiente mientras bajas
+  const titulos = $$("section h2.partir").filter(h => !h.closest("#paquetes"));
+  if (titulos.length > 1) {
+    const principal = $("main");
+    const guia = document.createElement("div");
+    guia.className = "avi-guia"; guia.setAttribute("aria-hidden", "true"); guia.innerHTML = avispaHTML;
+    principal.appendChild(guia);
+    gsap.set(guia, { scale: chico ? .55 : .7, transformOrigin: "50% 100%" });
+    const ponerX = gsap.quickSetter(guia, "x", "px"), ponerY = gsap.quickSetter(guia, "y", "px"), ponerR = gsap.quickSetter(guia, "rotation", "deg");
+    let puntos = [], ocultoDesde = Infinity, ocultoHasta = -Infinity;
+    const medir = () => {
+      const m = principal.getBoundingClientRect(), ancho = principal.clientWidth;
+      puntos = titulos.map(h => {
+        const pal = $$(".w", h), u = pal[pal.length - 1].getBoundingClientRect();
+        const cabe = u.right - m.left + 62 < ancho;
+        const arriba = h.getBoundingClientRect().top - m.top;
+        return { x: cabe ? u.right - m.left + 4 : ancho - 58, y: cabe ? u.top - m.top - 14 : arriba - 62, disparo: u.top + scrollY - innerHeight * .42 };
+      });
+      const paq = $("#paquetes");
+      if (paq) { const r = paq.getBoundingClientRect(); ocultoDesde = r.top + scrollY - innerHeight * .7; ocultoHasta = r.bottom + scrollY - innerHeight * .3; }
+    };
+    const colocar = () => {
+      if (!puntos.length) return;
+      const s = scrollY, ult = puntos.length - 1;
+      guia.classList.toggle("ver", s > puntos[0].disparo - innerHeight * .25 && !(s > ocultoDesde && s < ocultoHasta));
+      let i = 0;
+      while (i < ult - 1 && s >= puntos[i + 1].disparo) i++;
+      const a = puntos[i], b = puntos[i + 1];
+      const t = Math.max(0, Math.min(1, (s - a.disparo) / Math.max(1, b.disparo - a.disparo)));
+      const f = Math.max(0, Math.min(1, (t - .14) / .72)), e = f * f * (3 - 2 * f);
+      ponerX(a.x + (b.x - a.x) * e + Math.sin(f * Math.PI * 2) * (chico ? 22 : 70));
+      ponerY(a.y + (b.y - a.y) * e - Math.sin(f * Math.PI) * 40);
+      ponerR(e * 360);
+    };
+    medir(); colocar();
+    ScrollTrigger.create({ start: 0, end: "max", onUpdate: colocar });
+    ScrollTrigger.addEventListener("refresh", () => { medir(); colocar(); });
+  }
+  // Avispita de ayuda: cada rato saca el globito
+  const ayuda = $("#aviAyuda");
+  if (ayuda) {
+    const mostrarGlobo = () => { ayuda.classList.add("globo"); gsap.delayedCall(4, () => { ayuda.classList.remove("globo"); gsap.delayedCall(16, mostrarGlobo); }); };
+    gsap.delayedCall(7, mostrarGlobo);
+  }
+  // Hexágonos flotantes: pocos, a los costados, para llenar los espacios oscuros
+  if (pagina !== "legal") {
+    let k = 0;
+    $$("section").filter(s => s.id !== "paquetes" && s.id !== "formulario").forEach(sec => {
+      for (let j = 0; j < (chico ? 1 : 3); j++, k++) {
+        const hex = document.createElement("i");
+        hex.className = "hex-flota" + (k % 3 === 1 ? " lleno" : "");
+        hex.setAttribute("aria-hidden", "true");
+        const tam = [96, 56, 140, 72][k % 4] * (chico ? .6 : 1);
+        hex.style.cssText = `width:${tam}px;height:${tam * 1.15}px;top:${[14, 48, 76][j]}%;${k % 2 ? "right" : "left"}:${[1, 8, 3, 11][k % 4]}%`;
+        sec.appendChild(hex);
+        const d = 70 + (k % 3) * 55;
+        gsap.fromTo(hex, { y: d, rotation: -12 }, { y: -d, rotation: 14 + (k % 4) * 8, ease: "none", scrollTrigger: { trigger: sec, start: "top bottom", end: "bottom top", scrub: true } });
+      }
     });
   }
 }

@@ -575,3 +575,28 @@ nav.solida { background: rgba(10,8,5,.93); }
   .pf.reina .pf-lista { grid-template-columns: 1fr; }
   .pf.disponible .btn, .pf.medida .btn { align-self: stretch; justify-content: center; }
 }
+
+/* ---------- superposiciones ---------- */
+.avi-guia { position: absolute; left: 0; top: 0; width: 54px; height: 72px; z-index: 3; pointer-events: none; opacity: 0; transition: opacity .4s; will-change: transform; filter: drop-shadow(0 8px 12px rgba(0,0,0,.5)); }
+.avi-guia.ver { opacity: 1; }
+.avi-guia .avispa { animation: flotarAvi 1.3s ease-in-out infinite alternate; }
+@keyframes flotarAvi { from { transform: translateY(-3px); } to { transform: translateY(4px); } }
+.avi-ayuda { position: fixed; right: clamp(14px, 2.4vw, 28px); bottom: calc(clamp(14px, 2.4vw, 26px) + env(safe-area-inset-bottom)); z-index: 45; display: flex; align-items: center; gap: 10px;
+  opacity: 0; pointer-events: none; transform: translateY(14px); transition: opacity .35s, transform .35s; }
+.ya-bajo .avi-ayuda { opacity: 1; pointer-events: auto; transform: none; }
+.con-aviso .avi-ayuda { opacity: 0; pointer-events: none; }
+.avi-base { width: 64px; height: 72px; flex: none; display: grid; place-items: center; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  background: var(--oro); position: relative; transition: transform .25s; }
+.avi-base::before { content: ""; position: absolute; inset: 3px; clip-path: inherit; background: linear-gradient(160deg, #2A2010, #0D0A06); z-index: 0; }
+.avi-base .avispa { z-index: 1; }
+.avi-ayuda:hover .avi-base { transform: scale(1.08); }
+.avi-ayuda { isolation: isolate; filter: drop-shadow(0 10px 18px rgba(0,0,0,.55)); }
+.avi-base .avispa { transform: scale(.6); }
+.avi-base .avispa .ala.i { left: -18px; } .avi-base .avispa .ala.d { right: -18px; }
+.globo-txt { font-size: 14px; font-weight: 800; color: var(--negro); background: var(--oro); padding: 9px 14px; border-radius: 14px 14px 2px 14px; white-space: nowrap;
+  opacity: 0; transform: translateX(10px) scale(.9); transform-origin: 100% 100%; transition: opacity .3s, transform .3s; pointer-events: none; }
+.avi-ayuda.globo .globo-txt { opacity: 1; transform: none; }
+.hex-flota { position: absolute; z-index: 0; pointer-events: none; will-change: transform; opacity: .9;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 115'%3E%3Cpolygon points='50,2 98,29 98,86 50,113 2,86 2,29' fill='%23FFC400' fill-opacity='.03' stroke='%23FFC400' stroke-opacity='.4' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat; }
+.hex-flota.lleno { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 115'%3E%3Cpolygon points='50,2 98,29 98,86 50,113 2,86 2,29' fill='%23FFC400' fill-opacity='.16'/%3E%3C/svg%3E"); }
+section > :not(.hex-flota) { position: relative; z-index: 1; }
