@@ -493,3 +493,7 @@ footer .legal-links a:hover { color: var(--oro); }
   .aviso-cookies { right: 12px; max-width: none; padding: 18px; }
   .ac-botones .btn { flex: 1; justify-content: center; }
 }
+
+/* Títulos: la palabra destacada va en la letra normal y amarilla.
+   La cursiva se queda solo en la parte de arriba de Inicio, Flow y Studio, y en "¡Avíspese, ome!". */
+section h2 .ital:not(.ital-fija), .legal-hero h1 .ital { font-family: Montserrat, system-ui, sans-serif; font-style: normal; font-weight: 900; letter-spacing: inherit; color: var(--oro); }
