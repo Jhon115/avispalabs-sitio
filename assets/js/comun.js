@@ -219,7 +219,8 @@ $$("nav .links a").forEach(a => a.addEventListener("click", () => document.body.
 ScrollTrigger.create({ start: 0, end: "max", onUpdate: s => {
   gsap.set("#progreso", { scaleX: s.progress });
   $("#barra").classList.toggle("solida", s.scroll() > 40);
-  window.__aviBoton ? window.__aviBoton(s.scroll() > 320) : document.body.classList.toggle("ya-bajo", s.scroll() > 320);
+  const bajo = s.scroll() > 320 || !!window.__veraYa;
+  window.__aviBoton ? window.__aviBoton(bajo) : document.body.classList.toggle("ya-bajo", bajo);
   window.__scroll.v = s.getVelocity();
 }});
 
@@ -634,7 +635,9 @@ if (!REDUCIR) {
     if (baja === abajo) return;
     abajo = baja;
     limpiar();
-    if (!botonVera || !volando || REDUCIR || document.body.classList.contains("con-aviso")) { document.body.classList.toggle("ya-bajo", baja); return; }
+    // En celular el aviso de cookies tapa la esquina: ahí Vera espera a que lo acepten. En PC no se tapan.
+    const tapaAviso = document.body.classList.contains("con-aviso") && innerWidth < 620;
+    if (!botonVera || !volando || REDUCIR || tapaAviso) { document.body.classList.toggle("ya-bajo", baja); return; }
     if (!baja) {
       document.body.classList.remove("ya-bajo");
       volando.style.visibility = "";
@@ -657,6 +660,8 @@ if (!REDUCIR) {
       .call(() => document.body.classList.add("ya-bajo"), null, .68)
       .fromTo($(".avi-base", botonVera), { scale: .5 }, { scale: 1, duration: .32, ease: "back.out(2.4)", clearProps: "scale" }, .68);
   };
+  // En PC la pantalla es alta y mucha gente no baja: a los 4 s la avispita vuela sola a la esquina y aparece Vera.
+  if (botonVera && innerWidth >= 760) gsap.delayedCall(4, () => { window.__veraYa = true; window.__aviBoton(true); });
 }
 
 // ---------- Vera: chat guiado con botones (no usa IA ni guarda datos) ----------

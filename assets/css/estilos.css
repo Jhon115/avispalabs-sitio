@@ -584,7 +584,7 @@ nav.solida { background: rgba(10,8,5,.93); }
 .avi-ayuda { position: fixed; right: clamp(14px, 2.4vw, 28px); bottom: calc(clamp(14px, 2.4vw, 26px) + env(safe-area-inset-bottom)); z-index: 45; display: flex; align-items: center; gap: 10px;
   opacity: 0; pointer-events: none; transform: translateY(14px); transition: opacity .35s, transform .35s; }
 .ya-bajo .avi-ayuda { opacity: 1; pointer-events: auto; transform: none; }
-.con-aviso .avi-ayuda { opacity: 0; pointer-events: none; }
+@media (max-width: 619px) { .con-aviso .avi-ayuda { opacity: 0; pointer-events: none; } }
 .avi-base { width: 64px; height: 72px; flex: none; display: grid; place-items: center; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
   background: var(--oro); position: relative; transition: transform .25s; }
 .avi-base::before { content: ""; position: absolute; inset: 3px; clip-path: inherit; background: linear-gradient(160deg, #2A2010, #0D0A06); z-index: 0; }
