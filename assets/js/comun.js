@@ -461,7 +461,10 @@ if ($("#calcPaquete")) {
   let cantMensual = 12;
   const calcular = () => {
     const tipo = $("#calcPaquete").value;
-    const cantidad = Math.max(1, Math.min(50, Number($("#calcCantidad").value) || 1));
+    const campo = $("#calcCantidad");
+    const cantidad = Math.max(1, Math.min(50, Number(campo.value) || 1));
+    // La casilla no deja pasar de 50: más que eso se cotiza aparte.
+    if (Number(campo.value) > 50) campo.value = 50;
     const moneda = calcMoneda.value;
     const unitario = precioSuelto(tipo, cantidad);
     const total = Math.round(unitario * cantidad * 100) / 100;
@@ -474,6 +477,7 @@ if ($("#calcPaquete")) {
       : plan
       ? `${usd(unitario)} c/u. Si es cada mes, con el plan mensual de ${plan} te salen por ${usd(p.mensual[plan])}.`
       : `${usd(unitario)} por video.` + (cantidad === 1 ? " Desde 2 videos te sale más barato." : "");
+    if (cantidad === 50) tip.textContent += L(" ¿Necesitas más de 50? Escríbenos y te armamos un plan a tu medida.", " Need more than 50? Message us and we'll build a custom plan.");
     const verLocal = tasas && moneda !== "USD";
     $("#calcLocal").textContent = verLocal ? `≈ ${enMoneda(total, moneda)}` : "";
     $$(".mes .local").forEach(el => el.textContent = verLocal ? `≈ ${enMoneda(Number(el.dataset.usd), moneda)}` : "");
