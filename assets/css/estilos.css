@@ -610,7 +610,9 @@ button.avi-ayuda { background: none; border: 0; padding: 0; font: inherit; }
 .vera[hidden] { display: none; }
 .v-cab { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: linear-gradient(120deg, #2A2010, #120E08); border-bottom: 1px solid var(--linea); }
 .v-cab .avi-base { width: 46px; height: 52px; }
-.v-cab .avi-base .avispa { transform: scale(.44); }
+/* La avispa (54×72) es más grande que este hexágono: se centra a mano para que no quede corrida hacia abajo */
+.v-cab .avi-base { position: relative; }
+.v-cab .avi-base .avispa { position: absolute; left: 50%; top: 50%; margin: -36px 0 0 -27px; transform: scale(.5); }
 .v-nom { display: flex; flex-direction: column; flex: 1; min-width: 0; }
 .v-nom b { font-size: 17px; font-weight: 900; color: var(--crema); }
 .v-nom span { font-size: 12px; font-weight: 600; color: var(--gris); display: flex; align-items: center; gap: 6px; }
