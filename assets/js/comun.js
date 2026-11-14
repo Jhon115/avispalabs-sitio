@@ -428,8 +428,9 @@ if (form) {
     aviso.textContent = "";
   }));
   // si viene desde Avispa Flow o Avispa Studio, dejar marcada esa opción
+  // CSS.escape: un enlace con ?s= raro ya no rompe el formulario
   const desde = new URLSearchParams(location.search).get("s");
-  const pre = desde && form.querySelector(`input[name="servicio"][value="${desde}"]`);
+  const pre = desde && form.querySelector(`input[name="servicio"][value="${CSS.escape(desde)}"]`);
   if (pre) pre.checked = true;
   armar();
   gsap.from(".paso-f:not([hidden]), .resumen", { y: 60, opacity: 0, duration: .9, ease: "expo.out", stagger: .1, delay: .3 });

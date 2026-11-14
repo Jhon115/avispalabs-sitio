@@ -16,10 +16,7 @@
 <meta property="og:image" content="https://avispalabs.com/assets/img/icono-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdnjs.cloudflare.com">
-<link rel="preconnect" href="https://unpkg.com">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
+<link rel="modulepreload" href="../../assets/vendor/three-0.160.0.module.js">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/css/estilos.css">
 <link rel="alternate" hreflang="es" href="https://avispalabs.com/legal/cookies/">
@@ -65,7 +62,7 @@
 <ul>
   <li><b>No usamos cookies de publicidad ni de seguimiento.</b> No hay Google Analytics, píxel de Facebook ni nada parecido.</li>
   <li>Usamos un <b>almacenamiento técnico temporal</b> del navegador (sessionStorage) solo para que funcione la animación de panal al cambiar de página. Se borra al cerrar la pestaña y no te identifica.</li>
-  <li>Para cargar letras y animaciones usamos servicios externos (Google Fonts, cdnjs, jsDelivr y unpkg). Como en cualquier sitio, esos servicios pueden registrar datos técnicos como tu IP para entregar los archivos. Puedes ver sus propias políticas en sus páginas.</li>
+  <li>Las animaciones se cargan desde nuestro propio servidor. Para las letras usamos Google Fonts, un servicio externo que, como en cualquier sitio, puede registrar datos técnicos como tu IP para entregar los archivos. Puedes ver su política en su página.</li>
   <li>Guardamos en tu navegador (localStorage) que ya aceptaste el aviso de privacidad y el idioma que escogiste, para no preguntarte cada vez. No te identifica.</li>
   <li>La calculadora de precios de Avispa Studio consulta la tasa de cambio del día en open.er-api.com; esa consulta no envía datos tuyos aparte de los técnicos de cualquier conexión.</li>
   <li>Al tocar los botones de WhatsApp o correo sales de nuestra web: ahí aplican las políticas de WhatsApp (Meta) o de tu proveedor de correo.</li>
@@ -86,10 +83,10 @@
   <div class="redes"><a href="https://www.instagram.com/avispaedit" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@avispaedit" target="_blank" rel="noopener">TikTok</a></div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
+<script src="../../assets/vendor/gsap-3.12.5.min.js"></script>
+<script src="../../assets/vendor/ScrollTrigger-3.12.5.min.js"></script>
+<script src="../../assets/vendor/lenis-1.1.13.min.js"></script>
+<script type="importmap">{ "imports": { "three": "/assets/vendor/three-0.160.0.module.js" } }</script>
 <script src="../../assets/js/comun.js"></script>
 <script type="module" src="../../assets/js/panal3d.js"></script>
 </body>
